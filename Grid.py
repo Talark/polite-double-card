@@ -157,21 +157,28 @@ class Grid:
     #Input is list of 3 1) is orientation, 2-3)
 
     def moveIsLegal(self,commandFormatted):
-        if(commandFormatted[0] == 0):    
-            if(self.spaceAvailable(commandFormatted[3],commandFormatted[4]) == False): return False
+        if(commandFormatted[0] == "0"):    
+            if(self.spaceAvailable(commandFormatted[2],commandFormatted[3]) == False): return False
             #Checked Bottom Left Space
-            if(commandFormatted[0] % 2 == 1):
+            if(int(commandFormatted[1]) % 2 == 1):
                 #Checks space next to Bottom Left
-                if(self.spaceAvailable(chr(ord(commandFormatted[3]) + 1),commandFormatted[4]) == False): return False
-    #Checks if the space is available and the space below is taken         
-    def spaceAvailable(self,index1, index2):
-        if(index2 > 1):
-            return(self.board[index1][index2].color != 0 and self.board[index1][index2-1].color != 0 )
+                if(self.spaceAvailable(chr(ord(commandFormatted[2]) + 1),commandFormatted[3]) == False): return False
+        else:
+            if(not self.moveIsLegal(commandFormatted[5:])): return False
+            if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): return False
+        return True 
+    #Checks if the space is available and the space below is taken
+    def spaceAvailable(self,indexLetter, indexNum):
+        if(indexNum > 1):
+            return(self.board[indexLetter][indexNum].color != 0 and self.board[indexLetter][indexNum-1].color != 0 )
         else: 
-            return(self.board[index1][index2].color != 0) 
-        
+            return(self.board[indexLetter][indexNum].color != 0) 
+     
             #Check state and state next to it
-                        
+    def isOtherHalf(self,indexLetter1, indexNum1,indexLetter2, indexNum2):
+        #NEED TO DOUBLE CHECK THAT THIS WORKS
+        return( self.board[indexLetter1][indexNum1] == self.board[indexLetter2][indexNum2].neighbor)
+                       
         print("Checking if move is legal")
         
     #This method should receive coordinates from which it needs to radiate out from to check for a win
