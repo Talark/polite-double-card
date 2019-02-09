@@ -131,6 +131,12 @@ class Grid:
                         "12": HalfCard.HalfCard(0,0,"")
                             }
                 }
+    
+    #We need to change the input string to a list
+    def inputToList(self, inputString): 
+        command = inputString.split()
+        self.moveIsLegal(command)
+    
     #should only set appropriate cells of grid is move is legal
     #must return false if not legal, true otherwise
     def playCard(self, command):
