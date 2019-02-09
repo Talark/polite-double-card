@@ -131,21 +131,15 @@ class Grid:
                         "12": HalfCard.HalfCard(0,0,"")
                             }
                 }
+
     
-    #We need to change the input string to a list
-    def inputToList(self, inputString): 
-        inputString = "A B C D"
-        command = inputString.split()
-        return command
-    
+    def buildCard(self, command):
+        angle = command[0]
+        
     #should only set appropriate cells of grid is move is legal
     #must return false if not legal, true otherwise
     def playCard(self, command):
-        commandFormated = self.inputToList(command)
         print("Putting",command,"in grid if legal")
-        isLegal = self.moveIsLegal(commandFormated)
-        
-        
     
     #same as above, but has an additional legality check (ensure command targets 2 halves of 1 piece and piece is not under others)
     #can modify recycle command into a play command afterwards (just an implementation option if you want to do it that way)
@@ -153,7 +147,24 @@ class Grid:
         print("Modifying grid and command for recycle if legal")
     
     #Determine if move is legal and returns true or false
-    def moveIsLegal(self, command):
+    #Input is list of 3 1) is orientation, 2-3)
+
+    def moveIsLegal(self,commandFormatted):
+        if(commandFormatted[0] == 0):    
+            if(self.spaceAvailable(commandFormatted[3],commandFormatted[4]) == False): return False
+            #Checked Bottom Left Space
+            if(commandFormatted[0] % 2 == 1):
+                #Checks space next to Bottom Left
+                if(self.spaceAvailable(chr(ord(commandFormatted[3]) + 1),commandFormatted[4]) == False): return False
+    #Checks if the space is available and the space below is taken         
+    def spaceAvailable(self,index1, index2):
+        if(index2 > 1):
+            return(self.board[index1][index2].color != 0 and self.board[index1][index2-1].color != 0 )
+        else: 
+            return(self.board[index1][index2].color != 0) 
+        
+            #Check state and state next to it
+                        
         print("Checking if move is legal")
         
     #This method should receive coordinates from which it needs to radiate out from to check for a win
