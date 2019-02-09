@@ -4,7 +4,7 @@ Created on Thu Feb  7 13:48:45 2019
 
 @author: m_taran
 """
-import DoubleCard.Grid as Grid
+import Grid as Grid
 
 class Player:
     
@@ -25,3 +25,10 @@ class Player:
         
     def recycleAndPlay(self, board : Grid.Grid):
         print("Recycling and playing (Parent method called, this should not happen)")
+    
+    def getHandSize(self):
+        return self.hand
+    
+    def getPlayType(self):
+        return self.playType
+    
