@@ -134,13 +134,18 @@ class Grid:
     
     #We need to change the input string to a list
     def inputToList(self, inputString): 
+        inputString = "A B C D"
         command = inputString.split()
-        self.moveIsLegal(command)
+        return command
     
     #should only set appropriate cells of grid is move is legal
     #must return false if not legal, true otherwise
     def playCard(self, command):
+        commandFormated = self.inputToList(command)
         print("Putting",command,"in grid if legal")
+        isLegal = self.moveIsLegal(commandFormated)
+        
+        
     
     #same as above, but has an additional legality check (ensure command targets 2 halves of 1 piece and piece is not under others)
     #can modify recycle command into a play command afterwards (just an implementation option if you want to do it that way)
