@@ -24,13 +24,13 @@ class HalfCard:
         print(self.color," ",self.dot," ",self.neighbor)
         
     def __str__(self):
-        if(self.color == 1 and self.emptyDot == 1):
-            return(0)
-        elif(self.color == 1 and self.emptyDot == 2):
-            return(1)
-        elif(self.color == 2 and self.emptyDot == 1):
-            return(2)
-        elif(self.color == 2 and self.emptyDot == 2):
-            return(3)
+        if(self.color == 1 and self.dot == 1):
+            return("0")
+        elif(self.color == 1 and self.dot == 2):
+            return("1")
+        elif(self.color == 2 and self.dot == 1):
+            return("2")
+        elif(self.color == 2 and self.dot == 2):
+            return("3")
         else:
             return("-")
