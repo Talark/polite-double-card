@@ -6,7 +6,8 @@ Created on Thu Feb  7 13:45:55 2019
 """
 #Feel free to add methods as needed
 
-import DoubleCard.HalfCard as HalfCard
+import HalfCard as HalfCard
+import numpy as np
 
 class Grid:
     
