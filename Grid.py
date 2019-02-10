@@ -234,5 +234,17 @@ class Grid:
         print("Here's the grid as a list")
     
     #Self explanatory
+    #INPROGRESS
     def display(self):
+        s = ""
+        for row in self.board:
+            s = s + row + " "
+            for column in self.board[row]:
+                s = s + str(self.board[row][column])
+            s = s + "\n"
+        s = s + " "
+        for row in self.board["A"]:
+             s = s + row + ""
+        print(s)
         print("*throws board in face*")
+
