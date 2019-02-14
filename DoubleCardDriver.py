@@ -5,8 +5,7 @@ Created on Thu Feb  7 15:41:27 2019
 @author: m_taran
 """
 
-import DoubleCard.GameController as GC
-
+import GameController as GC
 #Construct GameController
 
 #Prompt user for game type to run

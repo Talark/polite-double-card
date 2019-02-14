@@ -19,117 +19,125 @@ class Grid:
         #board is a dictionary of dictionaries where A1 is the bottom left of the board
         #letters denote columns and numbers denote rows
         self.board = {
-                "A": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "1": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "B": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "2": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "C": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "3": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "D": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "4": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "E": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "5": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "F": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "6": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },                        
+                "7": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },   
+                "8": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },  
+                "9": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "G": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "10": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "H": {
-                        "1": HalfCard.HalfCard(0,0,""),
-                        "2": HalfCard.HalfCard(0,0,""),
-                        "3": HalfCard.HalfCard(0,0,""),
-                        "4": HalfCard.HalfCard(0,0,""),
-                        "5": HalfCard.HalfCard(0,0,""),
-                        "6": HalfCard.HalfCard(0,0,""),
-                        "7": HalfCard.HalfCard(0,0,""),
-                        "8": HalfCard.HalfCard(0,0,""),
-                        "9": HalfCard.HalfCard(0,0,""),
-                        "10": HalfCard.HalfCard(0,0,""),
-                        "11": HalfCard.HalfCard(0,0,""),
-                        "12": HalfCard.HalfCard(0,0,"")
+                "11": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "12": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
                             }
                 }
         #Used for looking up based on orientation
@@ -147,7 +155,6 @@ class Grid:
         
     #We need to change the input string to a list
     def inputToList(self, inputString): 
-        inputString = "A B C D"
         command = inputString.split()
         return command
     
@@ -158,20 +165,15 @@ class Grid:
         print("Putting",command,"in grid if legal")
         isLegal = self.moveIsLegal(commandFormated)
         if(isLegal):
-            return(True)
             #First half piece refers to the coordinate that we received, while second half piece is the coordinate of the piece
             #that we interpolated from the orientation
-            firstHalfPieceChar =commandFormated[2]
-            firstHalfPieceNum = commandFormated[3]
-            orientation = commandFormated[1]
-            neighborCoordinates = self.otherHalfCoordinates(orientation, firstHalfPieceChar, firstHalfPieceNum)
-            secondHalfPieceChar = neighborCoordinates[0]
-            secondHalfPieceNum = neighborCoordinates[1]
-            firstHalfInfo = self.cardInfo[orientation]
+            neighborCoordinates = self.otherHalfCoordinates(commandFormated[1], commandFormated[2], commandFormated[3])
+            firstHalfInfo = self.cardInfo[commandFormated[1]]
             secondHalfInfo= self.otherHalfInfo(firstHalfInfo)
             #PROOF CHECK THIS
-            self.board[firstHalfPieceChar][firstHalfPieceNum].setValues(firstHalfInfo[0],firstHalfInfo[1],"")
-            self.board[secondHalfPieceChar][secondHalfPieceNum].setValues(secondHalfInfo[0],secondHalfInfo[1],"")            
+            self.board[commandFormated[3]][commandFormated[2]].setValues(firstHalfInfo[0],firstHalfInfo[1],"")
+            self.board[neighborCoordinates[1]][neighborCoordinates[0]].setValues(secondHalfInfo[0],secondHalfInfo[1],"")    
+            return(True)
         else:
             return(False)
     
@@ -197,14 +199,14 @@ class Grid:
     #Checks if the space is available and the space below is taken
     def spaceAvailable(self,indexLetter, indexNum):
         if(indexNum > 1):
-            return(self.board[indexLetter][indexNum].color != 0 and self.board[indexLetter][indexNum-1].color != 0 )
+            return(self.board[indexNum][indexLetter].color != 0 and self.board[indexNum-1][indexLetter].color != 0 )
         else: 
-            return(self.board[indexLetter][indexNum].color != 0) 
+            return(self.board[indexNum][indexLetter].color != 0) 
      
             #Check state and state next to it
     def isOtherHalf(self,indexLetter1, indexNum1,indexLetter2, indexNum2):
         #NEED TO DOUBLE CHECK THAT THIS WORKS
-        return( self.board[indexLetter1][indexNum1] == self.board[indexLetter2][indexNum2].neighbor)
+        return( self.board[indexNum1][indexLetter1] == self.board[indexNum2][indexLetter2].neighbor)
                        
         print("Checking if move is legal")
         
@@ -213,12 +215,10 @@ class Grid:
     #HELPER
     def otherHalfCoordinates(self,orientation, indexLetter, indexNumber):
         if(int(orientation) % 2 == 1):
-            indexLetterNeighbor = chr(ord(indexLetter) + 1)
-            indexNumberNeighbor = indexNumber
+            indexLetter = chr(ord(indexLetter) + 1)            
         else:
-            indexLetterNeighbor = indexLetter
-            indexNumberNeighbor = chr(ord(indexNumber) + 1)
-        return([indexLetterNeighbor, indexNumberNeighbor])
+            indexNumber = chr(ord(indexNumber) + 1)
+        return([indexLetter, indexNumber])
         
     #Type list needs to be card info with first part being 
     def ohterHalfInfo(self,cardinfo):
@@ -244,7 +244,7 @@ class Grid:
                 s = s + str(self.board[row][column])
             s = s + "\n"
         s = s + " "
-        for row in self.board["A"]:
+        for row in self.board["1"]:
              s = s + row + ""
         print(s)
         print("*throws board in face*")

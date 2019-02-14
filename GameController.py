@@ -5,8 +5,8 @@ Created on Thu Feb  7 13:47:52 2019
 @author: m_taran
 """
 
-import DoubleCard.Grid as Grid
-import DoubleCard.Human as Human
+import Grid as Grid
+import Human as Human
 
 class GameController:
     
