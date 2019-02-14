@@ -211,8 +211,14 @@ class Grid:
     #Input is list of 3 1) is orientation, 2-3)
 
     def moveIsLegal(self,commandFormatted):
+       
         #Regular move legality check
-        if(commandFormatted[0] == "0"):    
+        if(commandFormatted[0] == "0"):  
+            for element in commandFormatted: 
+                if(int(commandFormatted[3])<1 or int(commandFormatted[3])>12):
+                    return False
+                if(commandFormatted[2]<'A' or commandFormatted[2]>'H'):
+                    return False
             if(self.spaceAvailable(commandFormatted[2],commandFormatted[3]) == False):
                 return False
             #Checked Bottom Left Space
@@ -223,6 +229,21 @@ class Grid:
         #Recycling move legality check
         else:
             #Check both targets are of same card
+            for element in commandFormatted: 
+                if(int(commandFormatted[6])<1 or int(commandFormatted[6])>12):
+                    return False
+                if(commandFormatted[5]<'A' or commandFormatted[5]>'H'):
+                    return False
+                if(int(commandFormatted[1])<1 or int(commandFormatted[1])>12):
+                    return False
+                if(commandFormatted[0]<'A' or commandFormatted[0]>'H'):
+                    return False
+                if(int(commandFormatted[3])<1 or int(commandFormatted[3])>12):
+                    return False
+                if(commandFormatted[2]<'A' or commandFormatted[2]>'H'):
+                    return False
+                if(int(commandFormatted[4])<1 or int(commandFormatted[4])>8):
+                    return False
             if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): 
                 return False
             
@@ -294,7 +315,7 @@ class Grid:
         oLet = commandFormatted[-2]
         nNum = oNum
         nLet = oLet
-        if(commandFormatted[-3] % 2 == 1):
+        if(int(commandFormatted[-3]) % 2 == 1):
             nLet = chr(ord(nLet)+1)
         else:
             nNum = chr(ord(nNum)+1)
@@ -306,65 +327,68 @@ class Grid:
         
         #Check horizontal
         winTemp = self.checkWinAlongOffsets(oNum,oLet,1,0)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
         
         #Check vertical
         winTemp = self.checkWinAlongOffsets(oNum,oLet,0,1)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
         
         #Check diag (\)
         winTemp = self.checkWinAlongOffsets(oNum,oLet,1,-1)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
         
         #Check diag (/)
         winTemp = self.checkWinAlongOffsets(oNum,oLet,1,1)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
             
         #Check for wins at neighbor
         
         #Check horizontal
         winTemp = self.checkWinAlongOffsets(nNum,nLet,1,0)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
         
         #Check vertical
         winTemp = self.checkWinAlongOffsets(nNum,nLet,0,1)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
             
         #Check diag (\)
         winTemp = self.checkWinAlongOffsets(nNum,nLet,1,-1)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
         
         #Check diag (/)
         winTemp = self.checkWinAlongOffsets(nNum,nLet,1,1)
-        if(winTemp[0]==4):
+        if(winTemp[0]>=4):
             colorWin+=1
-        if(winTemp[1]==4):
+        if(winTemp[1]>=4):
             dotWin+=1
         
         #Print congrats message and return true if winning sets found
         if(dotWin>0 and colorWin>0):
-            print("Both colors and dots have winning set. Current player",self.currentPlayer+1,"wins the game.")
+            if(self.currentPlayer == 0):
+                print("Both colors and dots have winning set. Current player colors wins the game.")
+            else:
+                print("Both colors and dots have winning set. Current player dots wins the game.")
             return True
         
         if(dotWin>0):
@@ -394,11 +418,15 @@ class Grid:
             iNum = chr(ord(number)+(i+1)*numOffset)
             iLet = chr(ord(letter)+(i+1)*letOffset)
             
-            #If out of bounds, move back
+            #If out of bounds, break
             if(int(iNum)<1 or int(iNum)>12):
-                iNum = chr(ord(iNum)-numOffset)
+                break
             if(iLet<'A' or iLet>'H'):
-                iLet = chr(ord(iLet)-letOffset)
+                break
+            
+            #If next cell empty, break
+            if(self.board[iNum][iLet].color == 0):
+                break
                 
             #Compare values unless different one seen previouly
             if(checkColor and self.board[iNum][iLet].color == colorType):
@@ -420,12 +448,16 @@ class Grid:
             iNum = chr(ord(number)-(i+1)*numOffset)
             iLet = chr(ord(letter)-(i+1)*letOffset)
             
-            #If out of bounds, move back
+            #If out of bounds, break
             if(int(iNum)<1 or int(iNum)>12):
-                iNum = chr(ord(iNum)+numOffset)
+                break
             if(iLet<'A' or iLet>'H'):
-                iLet = chr(ord(iLet)+letOffset)
+                break
                 
+            #If next cell empty, break
+            if(self.board[iNum][iLet].color == 0):
+                break
+            
             #Compare values unless different one seen previouly
             if(checkColor and self.board[iNum][iLet].color == colorType):
                 colorCount+=1
