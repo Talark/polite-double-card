@@ -34,9 +34,6 @@ class Human(Player.Player):
                 print("\nRecycle play initiated")
                 temp = self.recycleAndPlay(board)
         
-        if(self.hand>0):
-            self.hand -= 1
-            
         print(temp,"was accepted.")
         
         return temp.upper()

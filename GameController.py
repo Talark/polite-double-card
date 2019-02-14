@@ -34,6 +34,7 @@ class GameController:
                 command = self.player1.turnStart(self.gameBoard)
                 if self.gameBoard.playCard(command):
                     self.turn += 1
+                    self.player1.hand -= 1
                     oneChance == False
                     if self.gameBoard.checkForWin(command) == True:
                         break
@@ -50,6 +51,7 @@ class GameController:
                 command = self.player2.turnStart(self.gameBoard)
                 if self.gameBoard.playCard(command):
                     self.turn += 1
+                    self.player2.hand -= 1
                     oneChance == False
                     if self.gameBoard.checkForWin(command) == True:
                         break
