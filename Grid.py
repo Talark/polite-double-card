@@ -260,14 +260,14 @@ class Grid:
             #Check that removal is legal
             if(int(commandFormatted[4]) % 2 == 0):
                 #Check that nothing exists above card in one column
-                if(self.spaceAvailable(commandFormatted[2],chr(ord(commandFormatted[3])+2)) == False):
+                if(self.spaceAvailable(commandFormatted[2],str(int(commandFormatted[3])+2)) == False):
                     return False
                 
             else:
                 #Check that nothing exists above card in 2 columns
-                if(self.spaceAvailable(commandFormatted[2],chr(ord(commandFormatted[3])+1)) == False):
+                if(self.spaceAvailable(commandFormatted[2],str(int(commandFormatted[3])+1)) == False):
                     return False
-                if(self.spaceAvailable(chr(ord(commandFormatted[2])+1),chr(ord(commandFormatted[3])+1)) == False):
+                if(self.spaceAvailable(chr(ord(commandFormatted[2])+1),str(int(commandFormatted[3])+1)) == False):
                     return False
             
             #Extract last 3 values in recycle command
@@ -281,7 +281,7 @@ class Grid:
     #Checks if the space is available and the space below is taken
     def spaceAvailable(self,indexLetter, indexNum):
         if(int(indexNum) > 1):
-            return(self.board[indexNum][indexLetter].color == 0 and self.board[chr(ord(indexNum)-1)][indexLetter].color != 0 )
+            return(self.board[indexNum][indexLetter].color == 0 and self.board[str(int(indexNum)-1)][indexLetter].color != 0 )
         else: 
             return(self.board[indexNum][indexLetter].color == 0) 
      
@@ -297,7 +297,7 @@ class Grid:
         if(int(orientation) % 2 == 1):
             indexLetter = chr(ord(indexLetter) + 1)            
         else:
-            indexNumber = chr(ord(indexNumber) + 1)
+            indexNumber = str(int(indexNumber) + 1)
         return([indexLetter, indexNumber])
         
     #Type list needs to be card info with first part being 
@@ -318,7 +318,7 @@ class Grid:
         if(int(commandFormatted[-3]) % 2 == 1):
             nLet = chr(ord(nLet)+1)
         else:
-            nNum = chr(ord(nNum)+1)
+            nNum = str(int(nNum)+1)
         
         colorWin = 0
         dotWin = 0
@@ -415,7 +415,7 @@ class Grid:
         #Check cells in positive offset range
         for i in range(3):
             #Next cell to check
-            iNum = chr(ord(number)+(i+1)*numOffset)
+            iNum = str(int(number)+(i+1)*numOffset)
             iLet = chr(ord(letter)+(i+1)*letOffset)
             
             #If out of bounds, break
@@ -445,7 +445,7 @@ class Grid:
         #Check cells in negative offset range
         for i in range(3):
             #Next cell to check
-            iNum = chr(ord(number)-(i+1)*numOffset)
+            iNum = str(int(number)-(i+1)*numOffset)
             iLet = chr(ord(letter)-(i+1)*letOffset)
             
             #If out of bounds, break
