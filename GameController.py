@@ -21,9 +21,10 @@ class GameController:
         self.player2 = Human.Human()
         #Prompt player1 for dots or colors
         playType = None
-        playType = input("Dots or Colors?? ENTER 0 for dots, 1 for colors: ")
+        while(playType!="0" and playType!="1"):
+            playType = input("Dots or Colors?? ENTER 0 for dots, 1 for colors: ")
         self.player1.setPlayType(playType)
-        self.player2.setPlayType(1 - playType)
+        self.player2.setPlayType(1 - int(playType))
         #run through game logic (turns, ending games, move legality, communication between grid and players)
         #Turns
         oneChance = False
@@ -38,6 +39,7 @@ class GameController:
                         break
                 # if one chance is not used, use it    
                 else:
+                    print(command,"was not legal")
                     if oneChance == False:
                         oneChance = True
                     else:
@@ -51,6 +53,7 @@ class GameController:
                     if self.gameBoard.checkForWin(command) == True:
                         break
                 else:
+                    print(command,"was not legal")
                     if oneChance == False:
                         oneChance = True
                     else:
