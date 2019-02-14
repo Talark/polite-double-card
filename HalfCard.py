@@ -25,12 +25,12 @@ class HalfCard:
         
     def __str__(self):
         if(self.color == 1 and self.dot == 1):
-            return("0")
+            return("WE")
         elif(self.color == 1 and self.dot == 2):
-            return("1")
+            return("WF")
         elif(self.color == 2 and self.dot == 1):
-            return("2")
+            return("RE")
         elif(self.color == 2 and self.dot == 2):
-            return("3")
+            return("RF")
         else:
-            return("-")
+            return("--")

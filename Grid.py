@@ -19,97 +19,7 @@ class Grid:
         #board is a dictionary of dictionaries where A1 is the bottom left of the board
         #letters denote columns and numbers denote rows
         self.board = {
-                "1": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },
-                "2": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },
-                "3": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },
-                "4": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },
-                "5": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },
-                "6": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },                        
-                "7": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },   
-                "8": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },  
-                "9": {
-                        "A": HalfCard.HalfCard(0,0,""),
-                        "B": HalfCard.HalfCard(0,0,""),
-                        "C": HalfCard.HalfCard(0,0,""),
-                        "D": HalfCard.HalfCard(0,0,""),
-                        "E": HalfCard.HalfCard(0,0,""),
-                        "F": HalfCard.HalfCard(0,0,""),
-                        "G": HalfCard.HalfCard(0,0,""),
-                        "H": HalfCard.HalfCard(0,0,""),                    
-                            },
-                "10": {
+                "12": {
                         "A": HalfCard.HalfCard(0,0,""),
                         "B": HalfCard.HalfCard(0,0,""),
                         "C": HalfCard.HalfCard(0,0,""),
@@ -129,7 +39,97 @@ class Grid:
                         "G": HalfCard.HalfCard(0,0,""),
                         "H": HalfCard.HalfCard(0,0,""),                    
                             },
-                "12": {
+                "10": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "9": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "8": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "7": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },                        
+                "6": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },   
+                "5": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },  
+                "4": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "3": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "2": {
+                        "A": HalfCard.HalfCard(0,0,""),
+                        "B": HalfCard.HalfCard(0,0,""),
+                        "C": HalfCard.HalfCard(0,0,""),
+                        "D": HalfCard.HalfCard(0,0,""),
+                        "E": HalfCard.HalfCard(0,0,""),
+                        "F": HalfCard.HalfCard(0,0,""),
+                        "G": HalfCard.HalfCard(0,0,""),
+                        "H": HalfCard.HalfCard(0,0,""),                    
+                            },
+                "1": {
                         "A": HalfCard.HalfCard(0,0,""),
                         "B": HalfCard.HalfCard(0,0,""),
                         "C": HalfCard.HalfCard(0,0,""),
@@ -158,6 +158,19 @@ class Grid:
         command = inputString.split()
         return command
     
+    #This method assumes the command is properly formated. DO NOT USE AS A PUBLIC METHOD 
+    def __setCard__(self, commandFormated):
+        neighborCoordinates = self.otherHalfCoordinates(commandFormated[1], commandFormated[2], commandFormated[3])
+        firstHalfInfo = self.cardInfo[commandFormated[1]]
+        secondHalfInfo= self.otherHalfInfo(firstHalfInfo)
+            
+        originCoords = commandFormated[2]+" "+commandFormated[3]
+        neighCoords = neighborCoordinates[0]+" "+neighborCoordinates[1]
+            
+        #PROOF CHECK THIS
+        self.board[commandFormated[3]][commandFormated[2]].setValues(firstHalfInfo[0],firstHalfInfo[1],neighCoords)
+        self.board[neighborCoordinates[1]][neighborCoordinates[0]].setValues(secondHalfInfo[0],secondHalfInfo[1],originCoords)
+    
     #should only set appropriate cells of grid is move is legal
     #must return false if not legal, true otherwise
     def playCard(self, command):
@@ -167,48 +180,83 @@ class Grid:
         if(isLegal):
             #First half piece refers to the coordinate that we received, while second half piece is the coordinate of the piece
             #that we interpolated from the orientation
-            neighborCoordinates = self.otherHalfCoordinates(commandFormated[1], commandFormated[2], commandFormated[3])
-            firstHalfInfo = self.cardInfo[commandFormated[1]]
-            secondHalfInfo= self.otherHalfInfo(firstHalfInfo)
-            #PROOF CHECK THIS
-            self.board[commandFormated[3]][commandFormated[2]].setValues(firstHalfInfo[0],firstHalfInfo[1],"")
-            self.board[neighborCoordinates[1]][neighborCoordinates[0]].setValues(secondHalfInfo[0],secondHalfInfo[1],"")    
-            return(True)
+            if(commandFormated[0] == "0"):
+                self.__setCard__(commandFormated)
+            else:
+                #Legality of move already confirmed, no need to check again
+                self.recycleAndPlayCard(commandFormated)
+                
+            return True
         else:
             return(False)
     
     #same as above, but has an additional legality check (ensure command targets 2 halves of 1 piece and piece is not under others)
     #can modify recycle command into a play command afterwards (just an implementation option if you want to do it that way)
-    def recycleAndPlayCard(self, command):
-        print("Modifying grid and command for recycle if legal")
+    def recycleAndPlayCard(self, commandFormatted):
+        print("Modifying grid for recycle, then playing card")
+        #Remove old card
+        
+        self.board[commandFormatted[1]][commandFormatted[0]].setValues(0,0,"")
+        self.board[commandFormatted[3]][commandFormatted[2]].setValues(0,0,"")
+        
+        #Removing uneeded info
+        commandFormatted = commandFormatted[4:]
+        commandFormatted.insert(0,'0')
+        
+        #Place new card
+        self.__setCard__(commandFormatted)
     
     #Determine if move is legal and returns true or false
     #Input is list of 3 1) is orientation, 2-3)
 
     def moveIsLegal(self,commandFormatted):
+        #Regular move legality check
         if(commandFormatted[0] == "0"):    
-            if(self.spaceAvailable(commandFormatted[2],commandFormatted[3]) == False): return False
+            if(self.spaceAvailable(commandFormatted[2],commandFormatted[3]) == False):
+                return False
             #Checked Bottom Left Space
             if(int(commandFormatted[1]) % 2 == 1):
                 #Checks space next to Bottom Left
-                if(self.spaceAvailable(chr(ord(commandFormatted[2]) + 1),commandFormatted[3]) == False): return False
+                if(self.spaceAvailable(chr(ord(commandFormatted[2]) + 1),commandFormatted[3]) == False):
+                    return False
+        #Recycling move legality check
         else:
-            if(not self.moveIsLegal(commandFormatted[5:])): return False
-            if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): return False
+            #Check both targets are of same card
+            if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): 
+                return False
+            
+            #Check that removal is legal
+            if(int(commandFormatted[4]) % 2 == 0):
+                #Check that nothing exists above card in one column
+                if(self.spaceAvailable(commandFormatted[2],chr(ord(commandFormatted[3])+2)) == False):
+                    return False
+                
+            else:
+                #Check that nothing exists above card in 2 columns
+                if(self.spaceAvailable(commandFormatted[2],chr(ord(commandFormatted[3])+1)) == False):
+                    return False
+                if(self.spaceAvailable(chr(ord(commandFormatted[2])+1),chr(ord(commandFormatted[3])+1)) == False):
+                    return False
+            
+            #Extract last 3 values in recycle command
+            temp = commandFormatted[4:]
+            #Add a 0 to treat it as regular move
+            temp.insert(0,'0')
+            if(not self.moveIsLegal(temp)): 
+                return False
+            
         return True 
     #Checks if the space is available and the space below is taken
     def spaceAvailable(self,indexLetter, indexNum):
-        if(indexNum > 1):
-            return(self.board[indexNum][indexLetter].color != 0 and self.board[indexNum-1][indexLetter].color != 0 )
+        if(int(indexNum) > 1):
+            return(self.board[indexNum][indexLetter].color == 0 and self.board[chr(ord(indexNum)-1)][indexLetter].color != 0 )
         else: 
-            return(self.board[indexNum][indexLetter].color != 0) 
+            return(self.board[indexNum][indexLetter].color == 0) 
      
             #Check state and state next to it
     def isOtherHalf(self,indexLetter1, indexNum1,indexLetter2, indexNum2):
         #NEED TO DOUBLE CHECK THAT THIS WORKS
         return( self.board[indexNum1][indexLetter1] == self.board[indexNum2][indexLetter2].neighbor)
-                       
-        print("Checking if move is legal")
         
        #Method for finding the coordinates of the other half of a tile.
     #Returns a list with [Character,Number] values
@@ -221,7 +269,7 @@ class Grid:
         return([indexLetter, indexNumber])
         
     #Type list needs to be card info with first part being 
-    def ohterHalfInfo(self,cardinfo):
+    def otherHalfInfo(self,cardinfo):
         return(-1*np.subtract(cardinfo,[3,3]))
         
         
@@ -239,13 +287,13 @@ class Grid:
     def display(self):
         s = ""
         for row in self.board:
-            s = s + row + " "
+            s = s + row + ""
             for column in self.board[row]:
-                s = s + str(self.board[row][column])
+                s = s + "\t" + str(self.board[row][column])
             s = s + "\n"
-        s = s + " "
+        s = s + "\t"
         for row in self.board["1"]:
-             s = s + row + ""
+             s = s + row + "\t"
         print(s)
         print("*throws board in face*")
 
