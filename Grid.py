@@ -15,7 +15,7 @@ class Grid:
         #lastMove contains the command from the last move
         self.lastMove = "None"
         #currentPlayer should switch from 1 to 0 and back, this lets it be used as a conditional
-        self.currentPlayer = 1
+        self.currentPlayer = 0
         #board is a dictionary of dictionaries where A1 is the bottom left of the board
         #letters denote columns and numbers denote rows
         self.board = {
@@ -186,6 +186,7 @@ class Grid:
                 #Legality of move already confirmed, no need to check again
                 self.recycleAndPlayCard(commandFormated)
                 
+            self.lastMove = command
             return True
         else:
             return(False)
@@ -223,6 +224,16 @@ class Grid:
         else:
             #Check both targets are of same card
             if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): 
+                return False
+            
+            #Check that target for removal was not last played
+            temp = self.lastMove.split()
+            keyNumber = temp[-1]
+            keyLetter = temp[-2]
+            
+            if(commandFormatted[0] == keyLetter and commandFormatted[1] == keyNumber):
+                return False
+            if(commandFormatted[2] == keyLetter and commandFormatted[3] == keyNumber):
                 return False
             
             #Check that removal is legal
@@ -276,7 +287,157 @@ class Grid:
     #This method should receive coordinates from which it needs to radiate out from to check for a win
     #In general this method must check for wins from 2 origin points since cards have 2 halves that can be part of a 4-set
     def checkForWin(self, command):
-        print("Checking for wins originating from command location")
+        print("Checking for wins originating from command location and it's neighbor")
+        #Get number and letter indeces of origin and neighbor
+        commandFormatted = self.inputToList(command)
+        oNum = commandFormatted[-1]
+        oLet = commandFormatted[-2]
+        nNum = oNum
+        nLet = oLet
+        if(commandFormatted[-3] % 2 == 1):
+            nLet = chr(ord(nLet)+1)
+        else:
+            nNum = chr(ord(nNum)+1)
+        
+        colorWin = 0
+        dotWin = 0
+        
+        #Check for wins at origin
+        
+        #Check horizontal
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,0)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+        
+        #Check vertical
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,0,1)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+        
+        #Check diag (\)
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,-1)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+        
+        #Check diag (/)
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,1)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+            
+        #Check for wins at neighbor
+        
+        #Check horizontal
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,0)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+        
+        #Check vertical
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,0,1)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+            
+        #Check diag (\)
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,-1)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+        
+        #Check diag (/)
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,1)
+        if(winTemp[0]==4):
+            colorWin+=1
+        if(winTemp[1]==4):
+            dotWin+=1
+        
+        #Print congrats message and return true if winning sets found
+        if(dotWin>0 and colorWin>0):
+            print("Both colors and dots have winning set. Current player",self.currentPlayer+1,"wins the game.")
+            return True
+        
+        if(dotWin>0):
+            print("Dots have made a set of 4. Dots Win.")
+            return True
+             
+        if(colorWin>0):
+            print("Colors have made a set of 4. Colors Win.")
+            return True
+        
+        #Return False if no winning sets found
+        return False
+        
+    def checkWinAlongOffsets(self,number,letter,letOffset,numOffset):
+        #Initialise counts and types
+        colorType = self.board[number][letter].color
+        dotType = self.board[number][letter].dot
+        colorCount = 1
+        dotCount = 1
+        
+        checkDot = True
+        checkColor = True
+        
+        #Check cells in positive offset range
+        for i in range(3):
+            #Next cell to check
+            iNum = chr(ord(number)+(i+1)*numOffset)
+            iLet = chr(ord(letter)+(i+1)*letOffset)
+            
+            #If out of bounds, move back
+            if(int(iNum)<1 or int(iNum)>12):
+                iNum = chr(ord(iNum)-numOffset)
+            if(iLet<'A' or iLet>'H'):
+                iLet = chr(ord(iLet)-letOffset)
+                
+            #Compare values unless different one seen previouly
+            if(checkColor and self.board[iNum][iLet].color == colorType):
+                colorCount+=1
+            else:
+                checkColor = False
+                
+            if(checkDot and self.board[iNum][iLet].dot == dotType):
+                dotCount+=1
+            else:
+                checkDot = False
+        
+        checkDot = True
+        checkColor = True
+        
+        #Check cells in negative offset range
+        for i in range(3):
+            #Next cell to check
+            iNum = chr(ord(number)-(i+1)*numOffset)
+            iLet = chr(ord(letter)-(i+1)*letOffset)
+            
+            #If out of bounds, move back
+            if(int(iNum)<1 or int(iNum)>12):
+                iNum = chr(ord(iNum)+numOffset)
+            if(iLet<'A' or iLet>'H'):
+                iLet = chr(ord(iLet)+letOffset)
+                
+            #Compare values unless different one seen previouly
+            if(checkColor and self.board[iNum][iLet].color == colorType):
+                colorCount+=1
+            else:
+                checkColor = False
+                
+            if(checkDot and self.board[iNum][iLet].dot == dotType):
+                dotCount+=1
+            else:
+                checkDot = False
+                
+        return ([colorCount,dotCount])
     
     #Figure this might be usefull later on for AI implementation since dictionary accessing with indeces can get messy code wise
     def toList(self):
