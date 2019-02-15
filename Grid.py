@@ -245,6 +245,7 @@ class Grid:
                 if(int(commandFormatted[4])<1 or int(commandFormatted[4])>8):
                     return False
             if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): 
+                print(0)
                 return False
             
             #Check that target for removal was not last played
@@ -253,21 +254,33 @@ class Grid:
             keyLetter = temp[-2]
             
             if(commandFormatted[0] == keyLetter and commandFormatted[1] == keyNumber):
+                print(1)
                 return False
             if(commandFormatted[2] == keyLetter and commandFormatted[3] == keyNumber):
+                print(2)
                 return False
             
             #Check that removal is legal
-            if(int(commandFormatted[4]) % 2 == 0):
+            if(commandFormatted[0]==commandFormatted[2]):
                 #Check that nothing exists above card in one column
-                if(self.spaceAvailable(commandFormatted[2],str(int(commandFormatted[3])+2)) == False):
+                if(int(commandFormatted[1]) < int(commandFormatted[3])):
+                    maxVar = int(commandFormatted[3])
+                else: 
+                    maxVar = int(commandFormatted[1])
+                if(maxVar+1 > 12): 
+                    return True
+                if(self.spaceAvailable(commandFormatted[2],str(maxVar+1)) == False):
+                    print(3)
                     return False
-                
             else:
                 #Check that nothing exists above card in 2 columns
+                if(int(commandFormatted[3])+1 > 12): 
+                    return True
                 if(self.spaceAvailable(commandFormatted[2],str(int(commandFormatted[3])+1)) == False):
+                    print(4)
                     return False
-                if(self.spaceAvailable(chr(ord(commandFormatted[2])+1),str(int(commandFormatted[3])+1)) == False):
+                if(self.spaceAvailable(commandFormatted[0],str(int(commandFormatted[1])+1)) == False):
+                    print(5)
                     return False
             
             #Extract last 3 values in recycle command
@@ -275,6 +288,7 @@ class Grid:
             #Add a 0 to treat it as regular move
             temp.insert(0,'0')
             if(not self.moveIsLegal(temp)): 
+                print(6)
                 return False
             
         return True 
@@ -288,7 +302,9 @@ class Grid:
             #Check state and state next to it
     def isOtherHalf(self,indexLetter1, indexNum1,indexLetter2, indexNum2):
         #NEED TO DOUBLE CHECK THAT THIS WORKS
-        return( self.board[indexNum1][indexLetter1] == self.board[indexNum2][indexLetter2].neighbor)
+        temp = self.board[indexNum2][indexLetter2].neighbor.split()
+        
+        return(temp[0] == indexLetter1 and temp[1] == indexNum1)
         
        #Method for finding the coordinates of the other half of a tile.
     #Returns a list with [Character,Number] values
