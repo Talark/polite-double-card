@@ -214,6 +214,9 @@ class Grid:
        
         #Regular move legality check
         if(commandFormatted[0] == "0"):  
+            if (int(commandFormatted[1]) < 1 or int(commandFormatted[1]) > 8):
+                print("Rotation was out of bounds of the dictionnary for cardInfo")
+                return False
             for element in commandFormatted: 
                 if(int(commandFormatted[3])<1 or int(commandFormatted[3])>12):
                     return False
