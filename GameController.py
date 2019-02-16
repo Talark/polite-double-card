@@ -13,7 +13,7 @@ class GameController:
     def __init__(self):
         self.gameBoard = Grid.Grid()
         #Depending on how you want turn to be used it can also be set to 60
-        self.turn = 0
+        self.turn = 1
     
     #This method runs through a game for human vs human
     def runHumanVSHuman(self):
@@ -30,12 +30,12 @@ class GameController:
         oneChance = False
         
         while self.turn <= 60:
-            if self.turn % 2 == 0:
+            if self.turn % 2 == 1:
                 command = self.player1.turnStart(self.gameBoard)
                 if self.gameBoard.playCard(command):
                     self.turn += 1
                     self.player1.hand -= 1
-                    oneChance == False
+                    oneChance = False
                     if self.gameBoard.checkForWin(command) == True:
                         break
                     self.gameBoard.currentPlayer = self.player2.playType
@@ -52,7 +52,7 @@ class GameController:
                 if self.gameBoard.playCard(command):
                     self.turn += 1
                     self.player2.hand -= 1
-                    oneChance == False
+                    oneChance = False
                     if self.gameBoard.checkForWin(command) == True:
                         break
                     self.gameBoard.currentPlayer = self.player1.playType
@@ -63,8 +63,7 @@ class GameController:
                     else:
                         print("Player 1 wins!!")
                         break
-            
-            
+        self.gameBoard.display()
     #This method will modify logic from above for a human vs ai game
     def runHumanVSAI(self):
         print("Not yet implemented")

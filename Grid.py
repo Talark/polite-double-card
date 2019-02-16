@@ -213,7 +213,7 @@ class Grid:
     def moveIsLegal(self,commandFormatted):
        
         #Regular move legality check
-        if(commandFormatted[0] == "0"):  
+        if(commandFormatted[0] == "0"): 
             if (int(commandFormatted[1]) < 1 or int(commandFormatted[1]) > 8):
                 print("Rotation was out of bounds of the dictionnary for cardInfo")
                 return False
@@ -227,7 +227,12 @@ class Grid:
             #Checked Bottom Left Space
             if(int(commandFormatted[1]) % 2 == 1):
                 #Checks space next to Bottom Left
+                if(commandFormatted[2] == "H"):
+                    return False
                 if(self.spaceAvailable(chr(ord(commandFormatted[2]) + 1),commandFormatted[3]) == False):
+                    return False
+            else:
+                if(commandFormatted[3] == "12"):
                     return False
         #Recycling move legality check
         else:
@@ -306,7 +311,6 @@ class Grid:
     def isOtherHalf(self,indexLetter1, indexNum1,indexLetter2, indexNum2):
         #NEED TO DOUBLE CHECK THAT THIS WORKS
         temp = self.board[indexNum2][indexLetter2].neighbor.split()
-        
         return(len(temp) == 2 and temp[0] == indexLetter1 and temp[1] == indexNum1)
         
        #Method for finding the coordinates of the other half of a tile.
