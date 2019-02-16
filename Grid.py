@@ -507,5 +507,4 @@ class Grid:
         for row in self.board["1"]:
              s = s + row + "\t"
         print(s)
-        print("*throws board in face*")
 
