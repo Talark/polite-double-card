@@ -307,7 +307,7 @@ class Grid:
         #NEED TO DOUBLE CHECK THAT THIS WORKS
         temp = self.board[indexNum2][indexLetter2].neighbor.split()
         
-        return(temp[0] == indexLetter1 and temp[1] == indexNum1)
+        return(len(temp) == 2 and temp[0] == indexLetter1 and temp[1] == indexNum1)
         
        #Method for finding the coordinates of the other half of a tile.
     #Returns a list with [Character,Number] values
