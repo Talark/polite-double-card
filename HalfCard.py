@@ -22,3 +22,15 @@ class HalfCard:
     
     def display(self):
         print(self.color," ",self.dot," ",self.neighbor)
+        
+    def __str__(self):
+        if(self.color == 1 and self.dot == 1):
+            return("WE")
+        elif(self.color == 1 and self.dot == 2):
+            return("WF")
+        elif(self.color == 2 and self.dot == 1):
+            return("RE")
+        elif(self.color == 2 and self.dot == 2):
+            return("RF")
+        else:
+            return("--")
