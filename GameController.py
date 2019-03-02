@@ -22,47 +22,37 @@ class GameController:
         #Prompt player1 for dots or colors
         playType = None
         while(playType!="0" and playType!="1"):
-            playType = input("Dots or Colors?? ENTER 0 for dots, 1 for colors: ")
+            playType = input("Dots or Colors?? ENTER 0 for colors, 1 for dots: ")
         self.player1.setPlayType(int(playType))
         self.player2.setPlayType(1 - int(playType))
         #run through game logic (turns, ending games, move legality, communication between grid and players)
         #Turns
-        oneChance = False
         
         while self.turn <= 60:
             if self.turn % 2 == 1:
                 command = self.player1.turnStart(self.gameBoard)
                 if self.gameBoard.playCard(command):
+                    self.gameBoard.currentPlayer = self.player2.playType
                     self.turn += 1
                     self.player1.hand -= 1
-                    oneChance = False
+                    print("Checking for wins originating from command location and it's neighbor")
                     if self.gameBoard.checkForWin(command) == True:
+                        self.gameBoard.printMsgBuffer()
                         break
-                    self.gameBoard.currentPlayer = self.player2.playType
-                # if one chance is not used, use it    
-                else:
-                    print(command,"was not legal")
-                    if oneChance == False:
-                        oneChance = True
-                    else:
-                        print("Player 2 wins!!")
-                        break
+                    
             else:
                 command = self.player2.turnStart(self.gameBoard)
                 if self.gameBoard.playCard(command):
+                    self.gameBoard.currentPlayer = self.player1.playType
                     self.turn += 1
                     self.player2.hand -= 1
-                    oneChance = False
+                    print("Checking for wins originating from command location and it's neighbor")
                     if self.gameBoard.checkForWin(command) == True:
+                        self.gameBoard.printMsgBuffer()
                         break
-                    self.gameBoard.currentPlayer = self.player1.playType
-                else:
-                    print(command,"was not legal")
-                    if oneChance == False:
-                        oneChance = True
-                    else:
-                        print("Player 1 wins!!")
-                        break
+                    
+            self.gameBoard.printMsgBuffer()
+            
         self.gameBoard.display()
     #This method will modify logic from above for a human vs ai game
     def runHumanVSAI(self):

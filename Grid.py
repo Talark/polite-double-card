@@ -12,6 +12,7 @@ import numpy as np
 class Grid:
     
     def __init__(self):
+        self.msg = ""
         #lastMove contains the command from the last move
         self.lastMove = "None"
         #currentPlayer should switch from 1 to 0 and back, this lets it be used as a conditional
@@ -153,6 +154,20 @@ class Grid:
                 "8": [2,1]
                 }
         
+    def copyGrid(self, board):
+        self.msg = board.msg
+        self.currentPlayer = board.currentPlayer
+        self.lastMove = board.lastMove
+        
+        temp = board.board
+        
+        for row in self.board:
+            for column in self.board[row]:
+                self.board[row][column].dot = temp[row][column].dot
+                self.board[row][column].color = temp[row][column].color
+                self.board[row][column].neighbor = temp[row][column].neighbor
+        
+    
     #We need to change the input string to a list
     def inputToList(self, inputString): 
         command = inputString.split()
@@ -175,7 +190,7 @@ class Grid:
     #must return false if not legal, true otherwise
     def playCard(self, command):
         commandFormated = self.inputToList(command)
-        print("Putting",command,"in grid if legal")
+        self.msg+="Putting "+command+" in grid if legal\n"
         isLegal = self.moveIsLegal(commandFormated)
         if(isLegal):
             #First half piece refers to the coordinate that we received, while second half piece is the coordinate of the piece
@@ -194,7 +209,7 @@ class Grid:
     #same as above, but has an additional legality check (ensure command targets 2 halves of 1 piece and piece is not under others)
     #can modify recycle command into a play command afterwards (just an implementation option if you want to do it that way)
     def recycleAndPlayCard(self, commandFormatted):
-        print("Modifying grid for recycle, then playing card")
+        self.msg+="Modifying grid for recycle, then playing card\n"
         #Remove old card
         
         self.board[commandFormatted[1]][commandFormatted[0]].setValues(0,0,"")
@@ -215,45 +230,56 @@ class Grid:
         #Regular move legality check
         if(commandFormatted[0] == "0"): 
             if (int(commandFormatted[1]) < 1 or int(commandFormatted[1]) > 8):
-                print("Rotation was out of bounds of the dictionnary for cardInfo")
+                self.msg+="Rotation was out of bounds of the dictionnary for cardInfo\n"
                 return False
             for element in commandFormatted: 
                 if(int(commandFormatted[3])<1 or int(commandFormatted[3])>12):
+                    self.msg+="Row index was out of bounds of the dictionnary for cardInfo\n"
                     return False
                 if(commandFormatted[2]<'A' or commandFormatted[2]>'H'):
+                    self.msg+="Column index was out of bounds of the dictionnary for cardInfo\n"
                     return False
             if(self.spaceAvailable(commandFormatted[2],commandFormatted[3]) == False):
+                self.msg+="Targeted location does not meet playable criteria\n"
                 return False
             #Checked Bottom Left Space
             if(int(commandFormatted[1]) % 2 == 1):
                 #Checks space next to Bottom Left
                 if(commandFormatted[2] == "H"):
+                    self.msg+="Targeted location does not meet playable criteria\n"
                     return False
                 if(self.spaceAvailable(chr(ord(commandFormatted[2]) + 1),commandFormatted[3]) == False):
+                    self.msg+="Targeted location does not meet playable criteria\n"
                     return False
             else:
                 if(commandFormatted[3] == "12"):
+                    self.msg+="Targeted location does not meet playable criteria\n"
                     return False
         #Recycling move legality check
         else:
             #Check both targets are of same card
             for element in commandFormatted: 
                 if(int(commandFormatted[6])<1 or int(commandFormatted[6])>12):
+                    self.msg+="Row index was out of bounds of the dictionnary for cardInfo\n"
                     return False
                 if(commandFormatted[5]<'A' or commandFormatted[5]>'H'):
                     return False
                 if(int(commandFormatted[1])<1 or int(commandFormatted[1])>12):
+                    self.msg+="Row index was out of bounds of the dictionnary for cardInfo\n"
                     return False
                 if(commandFormatted[0]<'A' or commandFormatted[0]>'H'):
                     return False
                 if(int(commandFormatted[3])<1 or int(commandFormatted[3])>12):
+                    self.msg+="Row index was out of bounds of the dictionnary for cardInfo\n"
                     return False
                 if(commandFormatted[2]<'A' or commandFormatted[2]>'H'):
+                    self.msg+="Column index was out of bounds of the dictionnary for cardInfo\n"
                     return False
                 if(int(commandFormatted[4])<1 or int(commandFormatted[4])>8):
+                    self.msg+="Rotation was out of bounds of the dictionnary for cardInfo\n"
                     return False
             if(not self.isOtherHalf(commandFormatted[0],commandFormatted[1],commandFormatted[2],commandFormatted[3])): 
-                print(0)
+                self.msg+="Halves chosen for recycling are not part of the same card\n"
                 return False
             
             #Check that target for removal was not last played
@@ -262,10 +288,10 @@ class Grid:
             keyLetter = temp[-2]
             
             if(commandFormatted[0] == keyLetter and commandFormatted[1] == keyNumber):
-                print(1)
+                self.msg+="Card selected for recycling was the last card played\n"
                 return False
             if(commandFormatted[2] == keyLetter and commandFormatted[3] == keyNumber):
-                print(2)
+                self.msg+="Card selected for recycling was the last card played\n"
                 return False
             
             #Check that removal is legal
@@ -278,25 +304,24 @@ class Grid:
                 if(maxVar+1 > 12): 
                     return True
                 if(self.spaceAvailable(commandFormatted[2],str(maxVar+1)) == False):
-                    print(3)
+                    self.msg+="Selected card has other cards on top. Cannot remove\n"
                     return False
             else:
                 #Check that nothing exists above card in 2 columns
                 if(int(commandFormatted[3])+1 > 12): 
-                    return True
-                if(self.spaceAvailable(commandFormatted[2],str(int(commandFormatted[3])+1)) == False):
-                    print(4)
-                    return False
-                if(self.spaceAvailable(commandFormatted[0],str(int(commandFormatted[1])+1)) == False):
-                    print(5)
-                    return False
+                    if(self.spaceAvailable(commandFormatted[2],str(int(commandFormatted[3])+1)) == False):
+                        self.msg+="Selected card has other cards on top. Cannot remove\n"
+                        return False
+                    if(self.spaceAvailable(commandFormatted[0],str(int(commandFormatted[1])+1)) == False):
+                        self.msg+="Selected card has other cards on top. Cannot remove\n"
+                        return False
             
             #Extract last 3 values in recycle command
             temp = commandFormatted[4:]
             #Add a 0 to treat it as regular move
             temp.insert(0,'0')
             if(not self.moveIsLegal(temp)): 
-                print(6)
+                self.msg+="Recycling could not be performed\n"
                 return False
             
         return True 
@@ -331,7 +356,6 @@ class Grid:
     #This method should receive coordinates from which it needs to radiate out from to check for a win
     #In general this method must check for wins from 2 origin points since cards have 2 halves that can be part of a 4-set
     def checkForWin(self, command):
-        print("Checking for wins originating from command location and it's neighbor")
         #Get number and letter indeces of origin and neighbor
         commandFormatted = self.inputToList(command)
         oNum = commandFormatted[-1]
@@ -409,17 +433,17 @@ class Grid:
         #Print congrats message and return true if winning sets found
         if(dotWin>0 and colorWin>0):
             if(self.currentPlayer == 0):
-                print("Both colors and dots have winning set. Current player colors wins the game.")
+                self.msg+="Both colors and dots have winning set. Current player colors wins the game.\n"
             else:
-                print("Both colors and dots have winning set. Current player dots wins the game.")
+                self.msg+="Both colors and dots have winning set. Current player dots wins the game.\n"
             return True
         
         if(dotWin>0):
-            print("Dots have made a set of 4. Dots Win.")
+            self.msg+="Dots have made a set of 4. Dots Win.\n"
             return True
              
         if(colorWin>0):
-            print("Colors have made a set of 4. Colors Win.")
+            self.msg+="Colors have made a set of 4. Colors Win.\n"
             return True
         
         #Return False if no winning sets found
@@ -511,4 +535,8 @@ class Grid:
         for row in self.board["1"]:
              s = s + row + "\t"
         print(s)
-
+        
+    #Print contents of msg and purge contents
+    def printMsgBuffer(self):
+        print(self.msg)
+        self.msg = ""
