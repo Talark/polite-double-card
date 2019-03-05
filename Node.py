@@ -11,7 +11,7 @@ class Node:
     
     def __init__(self, playerHandSize, opponentHandSize, pType, oType, board = None, targetDepth = 1):
         self.command = ""
-        self.playType = pType
+        self.playerType = pType
         self.opponentType = oType
         self.gameBoard = Grid.Grid()
         
@@ -26,14 +26,14 @@ class Node:
         else:
             self.depth = targetDepth
             
-        self.score = 0
+        self.score = "None"
         self.maxplayerHandSize = playerHandSize
         self.minplayerHandSize = opponentHandSize
         
     #ideal to check command for legality before creating a node
     #this would eliminate illegal moves from ever being chosen
     def createNodeBranch(self, command):
-        temp = Node(self.minplayerHandSize, self.maxplayerHandSize-1, self.opponentType, self.playerType, self.board, self.depth-1)
+        temp = Node(self.minplayerHandSize, self.maxplayerHandSize-1, self.opponentType, self.playerType, self.gameBoard, self.depth-1)
         temp.command = command
         temp.gameBoard.playCard(command)
         self.branches.append(temp)
@@ -43,21 +43,75 @@ class Node:
     #After each node is built, buildChildNodes should be called on the new node once again if self.depth > 1
     #An else statement can be included to immediately calculate the heuristic score of the leaf nodes once they are reached
     def buildChildNodes(self):
-        print("buildChildNodes not implemented yet")
+        #Generate legal moves for root
+        moveList = self.__GenerateLegalMoves__()
+        
+        #For every legal move createNodeBranch
+        for move in moveList:
+            self.createNodeBranch(move)
+            # and build child nodes if max depth not reached
+            if(self.branches[-1].depth == 0):
+                self.branches[-1].calculateHeuristic()
+            #Otherwise calculate score of current game state
+            else:
+                self.branches[-1].buildChildNodes()
     
-    def calculateHeuristic(self, targetNode):
-        #This just ensures non node types are handled
-        if(not type(targetNode).__name__=="Node"):
-            return 0
-        print("calculateHeuristic not implemented yet")
+    def calculateHeuristic(self):
+        rowValue = {"1":0,"2":10,"3":20,"4":30,"5":40,"6":50,"7":60,"8":70,"9":80,"10":90,"11":100,"12":110}
+        columnValue = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8}
+        
+        total = 0
+        
+        temp = self.gameBoard.board
+        
+        for row in temp:
+            for column in temp[row]:
+                
+                if(temp[row][column].dot == 1):
+                    if(temp[row][column].color == 1):
+                        #White Empty
+                        total+=rowValue[row]+columnValue[column]
+                    else:
+                        #Red Empty
+                        total+=-1.5*(rowValue[row]+columnValue[column])
+                elif(temp[row][column].dot == 2):
+                    if(temp[row][column].color == 1):
+                        #White Full
+                        total+=3*(rowValue[row]+columnValue[column])
+                    else:
+                        #Red Full
+                        total+=-2*(rowValue[row]+columnValue[column])
+        self.score = total
     
     #This method should always be called on the root node first, otherwise not all moves are considered
     #Once called, a depth first search must be performed where the highest score and the command of the node is returned
     #as a list ex: [int score, String command]. On first call, maxScore should use default value and should swap its value on
     #every recursive call. When maxScore is True, scores should be compared as is, when false the scores should be multiplied by -1
     #This allows the opponent to minimize our score
-    def getBestMove(self, maxScore = True):
-        print("getBestMove not implemented yet")
+    def getBestMove(self, maxScore = True, root = False):
+        if(self.depth>0):
+            for possibility in self.branches:
+                temp = possibility.getBestMove(not maxScore)
+                if(self.score == "None"):
+                    best = possibility.command
+                    self.score = temp
+                elif(maxScore):
+                    if(self.score < temp):
+                        best = possibility.command
+                        self.score = temp
+                else:
+                    if(self.score > temp):
+                        best = possibility.command
+                        self.score = temp
+                        
+        if(root):
+            self.command = best
+        
+        return self.score
+                    
+    def makeMove(self):
+        self.getBestMove((self.playerType == 0), True)
+        return self.command
     
     #This method returns a list of commands that are all possible legal moves for the given grid
     def __GenerateLegalMoves__(self):

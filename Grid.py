@@ -191,6 +191,7 @@ class Grid:
     def playCard(self, command):
         commandFormated = self.inputToList(command)
         self.msg+="Putting "+command+" in grid if legal\n"
+        
         isLegal = self.moveIsLegal(commandFormated)
         if(isLegal):
             #First half piece refers to the coordinate that we received, while second half piece is the coordinate of the piece

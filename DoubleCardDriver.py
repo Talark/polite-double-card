@@ -22,7 +22,6 @@ test = GC.GameController()
 #test.gameBoard.playCard("0 5 G 1")
 #test.gameBoard.playCard("0 5 G 2")
 #test.gameBoard.playCard("0 5 G 3")
-
 #test.gameBoard.playCard("0 7 A 4")
 #test.gameBoard.playCard("0 7 A 5")
 #test.gameBoard.playCard("0 7 A 6")
@@ -35,9 +34,10 @@ test = GC.GameController()
 #test.gameBoard.playCard("0 7 G 4")
 #test.gameBoard.playCard("0 7 G 5")
 #test.gameBoard.playCard("0 7 G 6")
-#test.turn = 60
-test.runHumanVSHuman()
 
+#test.turn = 60
+#test.runHumanVSHuman()
+test.runHumanVSAI()
 #Prompt user for game type to run
 
 #Either end program after game ends (holding on win screen until expressly told to stop)

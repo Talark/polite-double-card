@@ -17,13 +17,13 @@ class Player:
         self.playType = num
     
     #The following methods are templates that should be copied into child classes and overridden
-    def turnStart(self, board : Grid.Grid):
+    def turnStart(self, board : Grid.Grid, opponentHand = 0):
         print("Turn has started (Parent method called, this should not happen)")
     
-    def playFromHand(self, board : Grid.Grid):
+    def playFromHand(self, board : Grid.Grid, opponentHand = 0):
         print("Playing from hand (Parent method called, this should not happen)")
         
-    def recycleAndPlay(self, board : Grid.Grid):
+    def recycleAndPlay(self, board : Grid.Grid, opponentHand = 0):
         print("Recycling and playing (Parent method called, this should not happen)")
     
     def getHandSize(self):
