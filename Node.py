@@ -113,6 +113,18 @@ class Node:
         self.getBestMove((self.playerType == 0), True)
         return self.command
     
+    def countLeaves(self):
+        total = 0
+        
+        if(self.depth==1):
+            return len(self.branches)
+        
+        for node in self.branches:
+            total+=node.countLeaves()
+        
+        return total
+                
+    
     #This method returns a list of commands that are all possible legal moves for the given grid
     def __GenerateLegalMoves__(self):
         legalMoveList = []
