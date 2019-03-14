@@ -57,6 +57,8 @@ class Node:
                 self.branches[-1].buildChildNodes()
     
     def calculateHeuristic(self):
+        #Using command along with checkForWinAlongOffset
+        #We can determine how beneficial a given move is
         rowValue = {"1":0,"2":10,"3":20,"4":30,"5":40,"6":50,"7":60,"8":70,"9":80,"10":90,"11":100,"12":110}
         columnValue = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8}
         
@@ -171,3 +173,151 @@ class Node:
                                 legalMoveList.append(' '.join(command))
         
         return legalMoveList
+    
+    #The following are helper methods for the heuristic
+    #Return highest potential for colors and dots to win as numerical value
+    def checkForWin(self, command):
+        #Get number and letter indeces of origin and neighbor
+        commandFormatted = command.split()
+        oNum = commandFormatted[-1]
+        oLet = commandFormatted[-2]
+        nNum = oNum
+        nLet = oLet
+        if(int(commandFormatted[-3]) % 2 == 1):
+            nLet = chr(ord(nLet)+1)
+        else:
+            nNum = str(int(nNum)+1)
+        
+        colorWin = 0
+        dotWin = 0
+        
+        #Check for wins at origin
+        
+        #Check horizontal
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,0)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+        
+        #Check vertical
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,0,1)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+        
+        #Check diag (\)
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,-1)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+        
+        #Check diag (/)
+        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,1)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+            
+        #Check for wins at neighbor
+        
+        #Check horizontal
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,0)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+        
+        #Check vertical
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,0,1)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+            
+        #Check diag (\)
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,-1)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+        
+        #Check diag (/)
+        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,1)
+        if(colorWin<winTemp[0]):
+            colorWin = winTemp[0]
+        if(dotWin<winTemp[1]):
+            dotWin = winTemp[1]
+        
+        return ([colorWin, dotWin])
+        
+    def checkWinAlongOffsets(self,number,letter,letOffset,numOffset):
+        #Initialise counts and types
+        colorType = self.board[number][letter].color
+        dotType = self.board[number][letter].dot
+        colorCount = 1
+        dotCount = 1
+        
+        checkDot = True
+        checkColor = True
+        
+        #Check cells in positive offset range
+        for i in range(3):
+            #Next cell to check
+            iNum = str(int(number)+(i+1)*numOffset)
+            iLet = chr(ord(letter)+(i+1)*letOffset)
+            
+            #If out of bounds, break
+            if(int(iNum)<1 or int(iNum)>12):
+                break
+            if(iLet<'A' or iLet>'H'):
+                break
+            
+            #If next cell empty, break
+            if(self.board[iNum][iLet].color == 0):
+                break
+                
+            #Compare values unless different one seen previouly
+            if(checkColor and self.board[iNum][iLet].color == colorType):
+                colorCount+=1
+            else:
+                checkColor = False
+                
+            if(checkDot and self.board[iNum][iLet].dot == dotType):
+                dotCount+=1
+            else:
+                checkDot = False
+        
+        checkDot = True
+        checkColor = True
+        
+        #Check cells in negative offset range
+        for i in range(3):
+            #Next cell to check
+            iNum = str(int(number)-(i+1)*numOffset)
+            iLet = chr(ord(letter)-(i+1)*letOffset)
+            
+            #If out of bounds, break
+            if(int(iNum)<1 or int(iNum)>12):
+                break
+            if(iLet<'A' or iLet>'H'):
+                break
+                
+            #If next cell empty, break
+            if(self.board[iNum][iLet].color == 0):
+                break
+            
+            #Compare values unless different one seen previouly
+            if(checkColor and self.board[iNum][iLet].color == colorType):
+                colorCount+=1
+            else:
+                checkColor = False
+                
+            if(checkDot and self.board[iNum][iLet].dot == dotType):
+                dotCount+=1
+            else:
+                checkDot = False
+                
+        return ([colorCount,dotCount])
