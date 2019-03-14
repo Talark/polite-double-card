@@ -8,6 +8,7 @@ Created on Sat Mar  2 12:32:20 2019
 import Player as Player
 import Grid as Grid
 import Node as Node
+import random
 
 class AI(Player.Player):
     
@@ -66,3 +67,13 @@ class AI(Player.Player):
             self.traceBuffer.append(str(option.score))
         #Blank space
         self.traceBuffer.append("")
+        
+    def choseDotsOrColors(self):
+        temp = random.randint(0,9)%2
+        
+        if(temp == 0):
+            print("AI has chosen colors")
+        else:
+            print("AI has chosen dots")
+        
+        return temp

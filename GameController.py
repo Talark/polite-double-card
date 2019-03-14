@@ -71,28 +71,35 @@ class GameController:
         if(aiFirst == "0"):
             self.player1 = AI.AI(traceMode)
             self.player1.setDepth(2)
+            
+            playType = self.player1.choseDotsOrColors()
+                
             self.player2 = Human.Human()
         else:
             self.player2 = AI.AI(traceMode)
             self.player2.setDepth(2)
             self.player1 = Human.Human()
+            
+            playType = None
+            while(playType!="0" and playType!="1"):
+                playType = input("Is player1 playing Dots or Colors?? ENTER 0 for colors, 1 for dots: ")
         
         #Prompt player1 for dots or colors
-        playType = None
-        while(playType!="0" and playType!="1"):
-            playType = input("Is player1 playing Dots or Colors?? ENTER 0 for colors, 1 for dots: ")
+        
         self.player1.setPlayType(int(playType))
         self.player2.setPlayType(1 - int(playType))
         
         
         while self.turn <= 60:
             if self.turn % 2 == 1:
+                print("\n-------Player1's turn",self.turn,"-------\n")
                 command = self.player1.turnStart(self.gameBoard,self.player2.hand)
                 
                 if self.gameBoard.playCard(command):
                     
                     print("Checking for wins originating from command location and it's neighbor")
                     if self.gameBoard.checkForWin(command) == True:
+                        print("\nPLAYER1 WINS\n")
                         self.gameBoard.printMsgBuffer()
                         break
                     
@@ -105,12 +112,14 @@ class GameController:
                     self.gameBoard.printMsgBuffer()
                     break
             else:
+                print("\n-------Player2's turn",self.turn,"-------\n")
                 command = self.player2.turnStart(self.gameBoard,self.player1.hand)
                 
                 if self.gameBoard.playCard(command):
                     
                     print("Checking for wins originating from command location and it's neighbor")
                     if self.gameBoard.checkForWin(command) == True:
+                        print("\nPLAYER2 WINS\n")
                         self.gameBoard.printMsgBuffer()
                         break
                     
