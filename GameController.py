@@ -29,7 +29,7 @@ class GameController:
         #run through game logic (turns, ending games, move legality, communication between grid and players)
         #Turns
         
-        while self.turn <= 60:
+        while self.turn <= 40:
             if self.turn % 2 == 1:
                 command = self.player1.turnStart(self.gameBoard)
                 if self.gameBoard.playCard(command):
@@ -90,7 +90,7 @@ class GameController:
         self.player2.setPlayType(1 - int(playType))
         
         
-        while self.turn <= 60:
+        while self.turn <= 40:
             if self.turn % 2 == 1:
                 print("\n-------Player1's turn",self.turn,"-------\n")
                 command = self.player1.turnStart(self.gameBoard,self.player2.hand)

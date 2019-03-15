@@ -329,6 +329,8 @@ class Grid:
     #Checks if the space is available and the space below is taken
     def spaceAvailable(self,indexLetter, indexNum):
         if(int(indexNum) > 1):
+            if(int(indexNum)>12):
+                return False
             return(self.board[indexNum][indexLetter].color == 0 and self.board[str(int(indexNum)-1)][indexLetter].color != 0 )
         else: 
             return(self.board[indexNum][indexLetter].color == 0) 

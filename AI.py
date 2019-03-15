@@ -36,7 +36,7 @@ class AI(Player.Player):
         else:
             self.recycleAndPlay(board, opponentHand)
         
-        nody = Node.Node(self.hand,opponentHand,self.playType,1-self.playType,board, self.depth)
+        nody = Node.Node(self.hand,opponentHand,self.playType, self.playType,1-self.playType,board, self.depth)
 
         nody.buildChildNodes()
 

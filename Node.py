@@ -6,12 +6,14 @@ Created on Sat Mar  2 12:36:55 2019
 """
 
 import Grid as Grid
+import random
 
 class Node:
     
-    def __init__(self, playerHandSize, opponentHandSize, pType, oType, board = None, targetDepth = 1):
+    def __init__(self, playerHandSize, opponentHandSize, ai, pType, oType, board = None, targetDepth = 1):
         self.command = ""
         self.playerType = pType
+        self.aiType = ai
         self.opponentType = oType
         self.gameBoard = Grid.Grid()
         
@@ -33,7 +35,7 @@ class Node:
     #ideal to check command for legality before creating a node
     #this would eliminate illegal moves from ever being chosen
     def createNodeBranch(self, command):
-        temp = Node(self.minplayerHandSize, self.maxplayerHandSize-1, self.opponentType, self.playerType, self.gameBoard, self.depth-1)
+        temp = Node(self.minplayerHandSize, self.maxplayerHandSize-1, self.aiType, self.opponentType, self.playerType, self.gameBoard, self.depth-1)
         temp.command = command
         temp.gameBoard.playCard(command)
         self.branches.append(temp)
@@ -54,35 +56,74 @@ class Node:
                 self.branches[-1].calculateHeuristic()
             #Otherwise calculate score of current game state
             else:
-                self.branches[-1].buildChildNodes()
+                #Check that new node does not result in end of game
+                if(not self.gameBoard.checkForWin(move)):
+                    self.branches[-1].buildChildNodes()
+                else:
+                    self.branches[-1].calculateHeuristic()
+        
+        random.shuffle(self.branches)
     
     def calculateHeuristic(self):
-        #Using command along with checkForWinAlongOffset
+        #Using command along with checkAlongOffset
         #We can determine how beneficial a given move is
-        rowValue = {"1":0,"2":10,"3":20,"4":30,"5":40,"6":50,"7":60,"8":70,"9":80,"10":90,"11":100,"12":110}
-        columnValue = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8}
         
         total = 0
         
-        temp = self.gameBoard.board
+        temp = [0,0]
+        color3Float = False
+        dot3Float = False
         
-        for row in temp:
-            for column in temp[row]:
-                
-                if(temp[row][column].dot == 1):
-                    if(temp[row][column].color == 1):
-                        #White Empty
-                        total+=rowValue[row]+columnValue[column]
-                    else:
-                        #Red Empty
-                        total+=-1.5*(rowValue[row]+columnValue[column])
-                elif(temp[row][column].dot == 2):
-                    if(temp[row][column].color == 1):
-                        #White Full
-                        total+=3*(rowValue[row]+columnValue[column])
-                    else:
-                        #Red Full
-                        total+=-2*(rowValue[row]+columnValue[column])
+        result = self.checkResult(self.command)
+        for line in result:
+            #Base value of
+            #4
+            if(line[0]>=4):
+                temp[0] = 1000
+            #3
+            elif(line[0]==3):
+                if(min(line[1],line[2])>=1):
+                    temp[0] = 500
+                elif(max(line[1],line[2])>=1):
+                    if(temp[0]<100):
+                        temp[0] = max(temp[0],50)
+                        color3Float = True
+                    elif(color3Float):
+                        temp[0]=1000
+            #2
+            elif(line[0]==2 and min(line[1],line[2])>=2):
+                temp[0] = max(temp[0],10)
+            #1
+            elif(line[0]==1 and min(line[1],line[2])>=3):
+                temp[0] = max(temp[0],1)
+            
+            #Base value of
+            #4
+            if(line[3]>=4):
+                temp[1] = 1000
+            #3
+            elif(line[3]==3):
+                if(min(line[4],line[5])>=1):
+                    temp[1] = 500
+                elif(max(line[4],line[5])>=1):
+                    if(temp[1]<100):
+                        temp[1] = max(temp[1],50)
+                        dot3Float = True
+                    elif(dot3Float):
+                        temp[1]=1000
+            #2
+            elif(line[3]==2 and min(line[4],line[5])>=2):
+                temp[1] = max(temp[1],10)
+            #1
+            elif(line[3]==1 and min(line[4],line[5])>=3):
+                temp[1] = max(temp[1],1)
+            
+    
+        total = temp[self.aiType] - temp[1-self.aiType]
+        
+        
+        #Wrapped open values
+        
         self.score = total
     
     #This method should always be called on the root node first, otherwise not all moves are considered
@@ -112,7 +153,7 @@ class Node:
         return self.score
                     
     def makeMove(self):
-        self.getBestMove((self.playerType == 0), True)
+        self.getBestMove(True, True)
         return self.command
     
     def countLeaves(self):
@@ -176,7 +217,7 @@ class Node:
     
     #The following are helper methods for the heuristic
     #Return highest potential for colors and dots to win as numerical value
-    def checkForWin(self, command):
+    def checkResult(self, command):
         #Get number and letter indeces of origin and neighbor
         commandFormatted = command.split()
         oNum = commandFormatted[-1]
@@ -188,77 +229,59 @@ class Node:
         else:
             nNum = str(int(nNum)+1)
         
-        colorWin = 0
-        dotWin = 0
+        temp = []
         
         #Check for wins at origin
         
         #Check horizontal
-        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,0)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(oNum,oLet,1,0))
+        
         
         #Check vertical
-        winTemp = self.checkWinAlongOffsets(oNum,oLet,0,1)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(oNum,oLet,0,1))
+        
         
         #Check diag (\)
-        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,-1)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(oNum,oLet,1,-1))
+        
         
         #Check diag (/)
-        winTemp = self.checkWinAlongOffsets(oNum,oLet,1,1)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(oNum,oLet,1,1))
+        
             
         #Check for wins at neighbor
         
         #Check horizontal
-        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,0)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(nNum,nLet,1,0))
+        
         
         #Check vertical
-        winTemp = self.checkWinAlongOffsets(nNum,nLet,0,1)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(nNum,nLet,0,1))
+        
             
         #Check diag (\)
-        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,-1)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(nNum,nLet,1,-1))
+        
         
         #Check diag (/)
-        winTemp = self.checkWinAlongOffsets(nNum,nLet,1,1)
-        if(colorWin<winTemp[0]):
-            colorWin = winTemp[0]
-        if(dotWin<winTemp[1]):
-            dotWin = winTemp[1]
+        temp.append(self.checkAlongOffsets(nNum,nLet,1,1))
         
-        return ([colorWin, dotWin])
         
-    def checkWinAlongOffsets(self,number,letter,letOffset,numOffset):
-        #Initialise counts and types
-        colorType = self.board[number][letter].color
-        dotType = self.board[number][letter].dot
+        return temp
+        
+    def checkAlongOffsets(self,number,letter,letOffset,numOffset):
+         #Initialise counts and types
+        board = self.gameBoard.board
+        colorType = board[number][letter].color
+        dotType = board[number][letter].dot
         colorCount = 1
         dotCount = 1
+        openLeft = 0
+        openRight = 0
+        dotBlockLeft = 3
+        dotBlockRight = 3
+        colorBlockLeft = 3
+        colorBlockRight = 3
         
         checkDot = True
         checkColor = True
@@ -276,18 +299,23 @@ class Node:
                 break
             
             #If next cell empty, break
-            if(self.board[iNum][iLet].color == 0):
-                break
+            if(board[iNum][iLet].color == 0):
+                if(self.gameBoard.spaceAvailable(iLet,iNum)):
+                    openRight+=1
                 
             #Compare values unless different one seen previouly
-            if(checkColor and self.board[iNum][iLet].color == colorType):
+            if(checkColor and board[iNum][iLet].color == colorType):
                 colorCount+=1
             else:
+                if(board[iNum][iLet].color != 0):
+                    colorBlockRight = openRight
                 checkColor = False
                 
-            if(checkDot and self.board[iNum][iLet].dot == dotType):
+            if(checkDot and board[iNum][iLet].dot == dotType):
                 dotCount+=1
             else:
+                if(board[iNum][iLet].dot != 0):
+                    dotBlockRight = openRight
                 checkDot = False
         
         checkDot = True
@@ -306,18 +334,23 @@ class Node:
                 break
                 
             #If next cell empty, break
-            if(self.board[iNum][iLet].color == 0):
-                break
+            if(board[iNum][iLet].color == 0):
+                if(self.gameBoard.spaceAvailable(iLet,iNum)):
+                    openLeft+=1
             
             #Compare values unless different one seen previouly
-            if(checkColor and self.board[iNum][iLet].color == colorType):
+            if(checkColor and board[iNum][iLet].color == colorType):
                 colorCount+=1
             else:
+                if(board[iNum][iLet].color != 0):
+                    colorBlockLeft = openLeft
                 checkColor = False
                 
-            if(checkDot and self.board[iNum][iLet].dot == dotType):
+            if(checkDot and board[iNum][iLet].dot == dotType):
                 dotCount+=1
             else:
+                if(board[iNum][iLet].dot != 0):
+                    dotBlockLeft = openLeft
                 checkDot = False
                 
-        return ([colorCount,dotCount])
+        return ([colorCount,min(colorBlockLeft, openLeft),min(colorBlockRight,openRight),dotCount,min(dotBlockLeft,openLeft),min(dotBlockRight,openRight)])
