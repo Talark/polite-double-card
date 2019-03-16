@@ -34,10 +34,10 @@ class Node:
         
     #ideal to check command for legality before creating a node
     #this would eliminate illegal moves from ever being chosen
-    def createNodeBranch(self, command):
+    def createNodeBranch(self, command, preChecked=False):
         temp = Node(self.minplayerHandSize, self.maxplayerHandSize-1, self.aiType, self.opponentType, self.playerType, self.gameBoard, self.depth-1)
         temp.command = command
-        temp.gameBoard.playCard(command)
+        temp.gameBoard.playCard(command,preChecked)
         self.branches.append(temp)
     
     #This method should call GenerateLegalMoves, then iterate through the list of commands
@@ -50,7 +50,7 @@ class Node:
         
         #For every legal move createNodeBranch
         for move in moveList:
-            self.createNodeBranch(move)
+            self.createNodeBranch(move,True)
             # and build child nodes if max depth not reached
             if(self.branches[-1].depth == 0):
                 self.branches[-1].calculateHeuristic(self.command)

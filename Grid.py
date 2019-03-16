@@ -188,11 +188,15 @@ class Grid:
     
     #should only set appropriate cells of grid is move is legal
     #must return false if not legal, true otherwise
-    def playCard(self, command):
+    def playCard(self, command,preChecked=False):
         commandFormated = self.inputToList(command)
         self.msg+="Putting "+command+" in grid if legal\n"
         
-        isLegal = self.moveIsLegal(commandFormated)
+        if(preChecked):
+            isLegal = True
+        else:
+            isLegal = self.moveIsLegal(commandFormated)
+        
         if(isLegal):
             #First half piece refers to the coordinate that we received, while second half piece is the coordinate of the piece
             #that we interpolated from the orientation
