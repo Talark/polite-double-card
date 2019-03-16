@@ -78,8 +78,8 @@ class Node:
         temp = self.analyseBoardAt(self.command)
             
     
-        total = temp[self.aiType] - temp[1-self.aiType] + prev[self.aiType] - prev[1-self.aiType]/2
-        #total = temp[self.aiType]-prev[1-self.aiType]
+        #total = temp[self.aiType] - 2*temp[1-self.aiType] + 2*prev[self.aiType] - prev[1-self.aiType]
+        total = temp[self.aiType] - 2*temp[1-self.aiType] + 2*prev[self.aiType]
         
         #Wrapped open values
         
@@ -96,22 +96,22 @@ class Node:
             sumDot = line[3]+min(line[4],line[5])
             
             if(sumColor==3 and max(line[1],line[2])>0):
-                    if(setOf3Color):
-                        temp[0]+=100
-                    else:
-                        setOf3Color = True
+                if(setOf3Color):
+                    temp[0]+=100
+                else:
+                    setOf3Color = True
                         
             if(sumDot==3 and max(line[4],line[5])>0):
-                    if(setOf3Dot):
-                        temp[0]+=100
-                    else:
-                        setOf3Dot = True
+                if(setOf3Dot):
+                    temp[0]+=100
+                else:
+                    setOf3Dot = True
             
             if(sumColor>=4):
-                    if(line[0]==4):
-                        temp[0]+=1000
-                    elif(line[0]==3):
-                        temp[0]+=100
+                if(line[0]==4):
+                    temp[0]+=1000
+                elif(line[0]==3):
+                    temp[0]+=100
             
             if(sumDot>=4):
                     if(line[3]==4):
@@ -121,7 +121,7 @@ class Node:
             
             if(self.playerType == 0):
                 if(line[0]==2):
-                        temp[0]+=10
+                    temp[0]+=10
             else:
                 
                 if(line[3]==2):
@@ -202,6 +202,16 @@ class Node:
             #Make a list of all possible targets for recycling
             
             checkedColumns = {"A":False,"B":False,"C":False,"D":False,"E":False,"F":False,"G":False,"H":False}
+            rowAboveCards = {"A":0,"B":0,"C":0,"D":0,"E":0,"F":0,"G":0,"H":0}
+            
+            lastPlayed = self.gameBoard.lastMove.split()
+            let = lastPlayed[-2]
+            num = lastPlayed[-1]
+            #Pre eliminate last played card
+            checkedColumns[let] = True
+            checkedColumns[board[num][let].neighbor.split()[0]] = True
+            rowAboveCards[let]=int(num)+1
+            rowAboveCards[board[num][let].neighbor.split()[0]]=int(num)+1
             
             possibleRecyclingTargets = []
             
@@ -211,7 +221,11 @@ class Node:
                         checkedColumns[column] = True
                         #This line ensures that horizontal cards do not appear in the list twice
                         checkedColumns[board[row][column].neighbor.split()[0]] = True
+                        rowAboveCards[column]=int(row)+1
+                        rowAboveCards[board[row][column].neighbor.split()[0]]=int(row)+1
                         possibleRecyclingTargets.append(column+" "+row+" "+board[row][column].neighbor)
+            
+            
             
             #For every target repeat above for all possible moves
             for target in possibleRecyclingTargets:
@@ -219,11 +233,12 @@ class Node:
                     temp = target.split()
                     command = [temp[0],temp[1],temp[2], temp[3],"","",row]
                     for column in board[row]:
-                        command[-2] = column
-                        for i in range(8):
-                            command[-3] = str(i+1)
-                            if(self.gameBoard.moveIsLegal(command)):
-                                legalMoveList.append(' '.join(command))
+                        if(row == str(rowAboveCards[column]) or (row == temp[1] and column == temp[0]) or (row == temp[3] and column == temp[2])):
+                            command[-2] = column
+                            for i in range(8):
+                                command[-3] = str(i+1)
+                                if(self.gameBoard.moveIsLegal(command)):
+                                    legalMoveList.append(' '.join(command))
         
         return legalMoveList
     

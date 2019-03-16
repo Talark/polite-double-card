@@ -61,7 +61,7 @@ class Human(Player.Player):
         #Check regular play format
         if(charList[0]=="0"):
             #Ensure it contains 4 elements
-            if(expected == 0 or len(charList) != 4):
+            if(expected <= 0 or len(charList) != 4):
                 return False
             
             #Check structure
@@ -70,7 +70,7 @@ class Human(Player.Player):
         #Check recycle play format
         else:
             #Ensure it contains 7 elements
-            if(expected != 0 or len(charList) != 7):
+            if(expected > 0 or len(charList) != 7):
                 return False
             
             #check first 4 elements
