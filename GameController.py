@@ -99,7 +99,6 @@ class GameController:
                     
                     print("Checking for wins originating from command location and it's neighbor")
                     if self.gameBoard.checkForWin(command) == True:
-                        print("\nPLAYER1 WINS\n")
                         self.gameBoard.printMsgBuffer()
                         break
                     
@@ -119,7 +118,6 @@ class GameController:
                     
                     print("Checking for wins originating from command location and it's neighbor")
                     if self.gameBoard.checkForWin(command) == True:
-                        print("\nPLAYER2 WINS\n")
                         self.gameBoard.printMsgBuffer()
                         break
                     

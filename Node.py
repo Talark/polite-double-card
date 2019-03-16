@@ -53,78 +53,90 @@ class Node:
             self.createNodeBranch(move)
             # and build child nodes if max depth not reached
             if(self.branches[-1].depth == 0):
-                self.branches[-1].calculateHeuristic()
+                self.branches[-1].calculateHeuristic(self.command)
             #Otherwise calculate score of current game state
             else:
-                #Check that new node does not result in end of game
-                if(not self.gameBoard.checkForWin(move)):
-                    self.branches[-1].buildChildNodes()
+                if(self.gameBoard.checkForWin(move)):
+                    self.branches[-1].calculateHeuristic(self.command)
                 else:
-                    self.branches[-1].calculateHeuristic()
+                    #Check that new node does not result in end of game
+                    self.branches[-1].buildChildNodes()
         
         random.shuffle(self.branches)
     
-    def calculateHeuristic(self):
+    def calculateHeuristic(self, prevCommand = ""):
         #Using command along with checkAlongOffset
         #We can determine how beneficial a given move is
         
         total = 0
         
-        temp = [0,0]
-        color3Float = False
-        dot3Float = False
+        if(prevCommand != ""):
+            prev = self.analyseBoardAt(prevCommand)
+        else:
+            prev = [0,0]
         
-        result = self.checkResult(self.command)
-        for line in result:
-            #Base value of
-            #4
-            if(line[0]>=4):
-                temp[0] = 1000
-            #3
-            elif(line[0]==3):
-                if(min(line[1],line[2])>=1):
-                    temp[0] = 500
-                elif(max(line[1],line[2])>=1):
-                    if(temp[0]<100):
-                        temp[0] = max(temp[0],50)
-                        color3Float = True
-                    elif(color3Float):
-                        temp[0]=1000
-            #2
-            elif(line[0]==2 and min(line[1],line[2])>=2):
-                temp[0] = max(temp[0],10)
-            #1
-            elif(line[0]==1 and min(line[1],line[2])>=3):
-                temp[0] = max(temp[0],1)
-            
-            #Base value of
-            #4
-            if(line[3]>=4):
-                temp[1] = 1000
-            #3
-            elif(line[3]==3):
-                if(min(line[4],line[5])>=1):
-                    temp[1] = 500
-                elif(max(line[4],line[5])>=1):
-                    if(temp[1]<100):
-                        temp[1] = max(temp[1],50)
-                        dot3Float = True
-                    elif(dot3Float):
-                        temp[1]=1000
-            #2
-            elif(line[3]==2 and min(line[4],line[5])>=2):
-                temp[1] = max(temp[1],10)
-            #1
-            elif(line[3]==1 and min(line[4],line[5])>=3):
-                temp[1] = max(temp[1],1)
+        temp = self.analyseBoardAt(self.command)
             
     
-        total = temp[self.aiType] - temp[1-self.aiType]
-        
+        total = temp[self.aiType] - temp[1-self.aiType] + prev[self.aiType] - prev[1-self.aiType]/2
+        #total = temp[self.aiType]-prev[1-self.aiType]
         
         #Wrapped open values
         
         self.score = total
+    
+    def analyseBoardAt(self,command):
+        temp = [0,0]
+        result = self.checkResult(self.command)
+        setOf3Color = False
+        setOf3Dot = False
+        for line in result:
+            
+            sumColor = line[0]+min(line[1],line[2])
+            sumDot = line[3]+min(line[4],line[5])
+            
+            if(sumColor==3 and max(line[1],line[2])>0):
+                    if(setOf3Color):
+                        temp[0]+=100
+                    else:
+                        setOf3Color = True
+                        
+            if(sumDot==3 and max(line[4],line[5])>0):
+                    if(setOf3Dot):
+                        temp[0]+=100
+                    else:
+                        setOf3Dot = True
+            
+            if(sumColor>=4):
+                    if(line[0]==4):
+                        temp[0]+=1000
+                    elif(line[0]==3):
+                        temp[0]+=100
+            
+            if(sumDot>=4):
+                    if(line[3]==4):
+                        temp[1]+=1000
+                    elif(line[3]==3):
+                        temp[1]+=100
+            
+            if(self.playerType == 0):
+                if(line[0]==2):
+                        temp[0]+=10
+            else:
+                
+                if(line[3]==2):
+                    temp[1]+=10
+                
+                        
+            #Any base value lower than 3 is ignored as it takes minimum 3 moves to reach winning scenario
+            #Also requires to much computation time to see that far ahead
+        if(temp[0]>=1000 and temp[1]>=1000):
+            if(self.playerType == 0):
+                temp[1] = 0
+            else:
+                temp[0] = 0
+        
+        return temp
     
     #This method should always be called on the root node first, otherwise not all moves are considered
     #Once called, a depth first search must be performed where the highest score and the command of the node is returned
@@ -283,9 +295,6 @@ class Node:
         colorBlockLeft = 3
         colorBlockRight = 3
         
-        checkDot = True
-        checkColor = True
-        
         #Check cells in positive offset range
         for i in range(3):
             #Next cell to check
@@ -300,26 +309,23 @@ class Node:
             
             #If next cell empty, break
             if(board[iNum][iLet].color == 0):
-                if(self.gameBoard.spaceAvailable(iLet,iNum)):
+                if(self.gameBoard.spaceAvailable(iLet,iNum) or self.gameBoard.spaceAvailable(iLet,str(int(iNum)-1))):
                     openRight+=1
                 
             #Compare values unless different one seen previouly
-            if(checkColor and board[iNum][iLet].color == colorType):
+            if(openRight<colorBlockRight and board[iNum][iLet].color == colorType):
                 colorCount+=1
             else:
                 if(board[iNum][iLet].color != 0):
                     colorBlockRight = openRight
-                checkColor = False
                 
-            if(checkDot and board[iNum][iLet].dot == dotType):
+                
+            if(openRight<dotBlockRight and board[iNum][iLet].dot == dotType):
                 dotCount+=1
             else:
                 if(board[iNum][iLet].dot != 0):
                     dotBlockRight = openRight
-                checkDot = False
-        
-        checkDot = True
-        checkColor = True
+                
         
         #Check cells in negative offset range
         for i in range(3):
@@ -335,22 +341,22 @@ class Node:
                 
             #If next cell empty, break
             if(board[iNum][iLet].color == 0):
-                if(self.gameBoard.spaceAvailable(iLet,iNum)):
+                if(self.gameBoard.spaceAvailable(iLet,iNum) or self.gameBoard.spaceAvailable(iLet,str(int(iNum)-1))):
                     openLeft+=1
             
             #Compare values unless different one seen previouly
-            if(checkColor and board[iNum][iLet].color == colorType):
+            if(openLeft<colorBlockLeft and board[iNum][iLet].color == colorType):
                 colorCount+=1
             else:
                 if(board[iNum][iLet].color != 0):
                     colorBlockLeft = openLeft
-                checkColor = False
                 
-            if(checkDot and board[iNum][iLet].dot == dotType):
+                
+            if(openLeft<dotBlockLeft and board[iNum][iLet].dot == dotType):
                 dotCount+=1
             else:
                 if(board[iNum][iLet].dot != 0):
                     dotBlockLeft = openLeft
-                checkDot = False
+                
                 
         return ([colorCount,min(colorBlockLeft, openLeft),min(colorBlockRight,openRight),dotCount,min(dotBlockLeft,openLeft),min(dotBlockRight,openRight)])
