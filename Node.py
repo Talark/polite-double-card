@@ -16,7 +16,7 @@ class Node:
         self.aiType = ai
         self.opponentType = oType
         self.gameBoard = Grid.Grid()
-        
+
         if(board != None):
             self.gameBoard.copyGrid(board)
             
@@ -53,45 +53,46 @@ class Node:
             self.createNodeBranch(move,True)
             # and build child nodes if max depth not reached
             if(self.branches[-1].depth == 0):
-                self.branches[-1].calculateHeuristic(self.command)
+                self.branches[-1].calculateHeuristic()
             #Otherwise calculate score of current game state
             else:
-                if(self.gameBoard.checkForWin(move)):
-                    self.branches[-1].calculateHeuristic(self.command)
+                if(self.branches[-1].gameBoard.checkForWin(move)==True):
+                    self.branches[-1].calculateHeuristic()
                 else:
                     #Check that new node does not result in end of game
                     self.branches[-1].buildChildNodes()
         
         random.shuffle(self.branches)
     
-    def calculateHeuristic(self, prevCommand = ""):
+    def calculateHeuristic(self):
         #Using command along with checkAlongOffset
         #We can determine how beneficial a given move is
         
         total = 0
         
-        if(prevCommand != ""):
-            prev = self.analyseBoardAt(prevCommand)
-        else:
-            prev = [0,0]
-        
         temp = self.analyseBoardAt(self.command)
             
-    
-        #total = temp[self.aiType] - 2*temp[1-self.aiType] + 2*prev[self.aiType] - prev[1-self.aiType]
-        total = temp[self.aiType] - 2*temp[1-self.aiType] + 2*prev[self.aiType]
+        if(temp[self.aiType]>=10000):
+            total = temp[self.aiType]
+        elif(temp[1-self.aiType]>=10000):
+            total = -temp[1-self.aiType]
+        else:
+            total = temp[self.aiType]-temp[1-self.aiType]
+        #total = temp[self.aiType] - temp[1-self.aiType]
         
         #Wrapped open values
         
         self.score = total
     
     def analyseBoardAt(self,command):
-        temp = [0,0]
+        
         result = self.checkResult(self.command)
         setOf3Color = False
         setOf3Dot = False
+        holdColor = 0
+        holdDot = 0
         for line in result:
-            
+            temp = [0,0]
             sumColor = line[0]+min(line[1],line[2])
             sumDot = line[3]+min(line[4],line[5])
             
@@ -99,44 +100,45 @@ class Node:
                 if(setOf3Color):
                     temp[0]+=100
                 else:
+                    temp[0]+=20
                     setOf3Color = True
                         
             if(sumDot==3 and max(line[4],line[5])>0):
                 if(setOf3Dot):
-                    temp[0]+=100
+                    temp[1]+=100
                 else:
+                    temp[1]+=20
                     setOf3Dot = True
             
             if(sumColor>=4):
-                if(line[0]==4):
+                if(line[0]>4):
                     temp[0]+=1000
+                elif(line[0]==4):
+                    temp[0]+=10000
                 elif(line[0]==3):
                     temp[0]+=100
             
             if(sumDot>=4):
-                    if(line[3]==4):
-                        temp[1]+=1000
-                    elif(line[3]==3):
-                        temp[1]+=100
+                if(line[3]>4):
+                    temp[1]+=1000
+                elif(line[3]==4):
+                    temp[1]+=10000
+                elif(line[3]==3):
+                    temp[1]+=100
             
             if(self.playerType == 0):
                 if(line[0]==2):
-                    temp[0]+=10
+                    temp[0]+=1
             else:
                 
                 if(line[3]==2):
-                    temp[1]+=10
-                
-                        
+                    temp[1]+=1
+            holdColor = max(holdColor,temp[0])
+            holdDot = max(holdDot,temp[1])            
             #Any base value lower than 3 is ignored as it takes minimum 3 moves to reach winning scenario
             #Also requires to much computation time to see that far ahead
-        if(temp[0]>=1000 and temp[1]>=1000):
-            if(self.playerType == 0):
-                temp[1] = 0
-            else:
-                temp[0] = 0
         
-        return temp
+        return [holdColor,holdDot]
     
     #This method should always be called on the root node first, otherwise not all moves are considered
     #Once called, a depth first search must be performed where the highest score and the command of the node is returned
