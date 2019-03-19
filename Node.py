@@ -111,20 +111,16 @@ class Node:
                     setOf3Dot = True
             
             if(sumColor>=4):
-                if(line[0]>4):
-                    temp[0]+=1000
-                elif(line[0]==4):
-                    temp[0]+=10000
+                if(line[0]>=4):
+                    temp[0]+=11000
                 elif(line[0]==3):
-                    temp[0]+=100
+                    temp[0]+=10000
             
             if(sumDot>=4):
-                if(line[3]>4):
-                    temp[1]+=1000
-                elif(line[3]==4):
-                    temp[1]+=10000
+                if(line[3]>=4):
+                    temp[1]+=11000
                 elif(line[3]==3):
-                    temp[1]+=100
+                    temp[1]+=10000
             
             if(self.playerType == 0):
                 if(line[0]==2):
@@ -326,7 +322,6 @@ class Node:
             
             #If next cell empty, break
             if(board[iNum][iLet].color == 0):
-                if(self.gameBoard.spaceAvailable(iLet,iNum) or self.gameBoard.spaceAvailable(iLet,str(int(iNum)-1))):
                     openRight+=1
                 
             #Compare values unless different one seen previouly
@@ -358,7 +353,6 @@ class Node:
                 
             #If next cell empty, break
             if(board[iNum][iLet].color == 0):
-                if(self.gameBoard.spaceAvailable(iLet,iNum) or self.gameBoard.spaceAvailable(iLet,str(int(iNum)-1))):
                     openLeft+=1
             
             #Compare values unless different one seen previouly

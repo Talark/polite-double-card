@@ -34,6 +34,7 @@ class AI(Player.Player):
         if(self.hand>0):
             self.playFromHand(board, opponentHand)
         else:
+            self.depth = 1
             self.recycleAndPlay(board, opponentHand)
         
         nody = Node.Node(self.hand,opponentHand,self.playType, self.playType,1-self.playType,board, self.depth)
