@@ -31,13 +31,10 @@ class AI(Player.Player):
         self.depth = value
     
     def turnStart(self, board : Grid.Grid, opponentHand = 0):
-        if(opponentHand == 0):
-            self.depth = 1
         
         if(self.hand>0):
             self.playFromHand(board, opponentHand)
         else:
-            self.depth = 1
             self.recycleAndPlay(board, opponentHand)
         
         nody = Node.Node(self.hand,opponentHand,self.playType, self.playType,1-self.playType,board, self.depth)
