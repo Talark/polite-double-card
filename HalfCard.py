@@ -23,6 +23,11 @@ class HalfCard:
     def display(self):
         print(self.color," ",self.dot," ",self.neighbor)
         
+    def copyCard(self,card):
+        self.color = card.color
+        self.dot = card.dot
+        self.neighbor = card.neighbor
+
     def __str__(self):
         if(self.color == 1 and self.dot == 1):
             return("WE")

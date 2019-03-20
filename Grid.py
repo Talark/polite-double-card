@@ -320,16 +320,27 @@ class Grid:
                     if(self.spaceAvailable(commandFormatted[0],str(int(commandFormatted[1])+1)) == False):
                         self.msg+="Selected card has other cards on top. Cannot remove\n"
                         return False
-            
+
             #Extract last 3 values in recycle command
             temp = commandFormatted[4:]
+            hold1 = HalfCard.HalfCard(0,0,"")
+            hold2 = HalfCard.HalfCard(0,0,"")
+            hold1.copyCard(self.board[commandFormatted[1]][commandFormatted[0]])
+            hold2.copyCard(self.board[commandFormatted[3]][commandFormatted[2]])
+
+            self.board[commandFormatted[1]][commandFormatted[0]].setValues(0,0,"")
+            self.board[commandFormatted[3]][commandFormatted[2]].setValues(0,0,"")
+
             #Add a 0 to treat it as regular move
             temp.insert(0,'0')
             if(not self.moveIsLegal(temp)): 
                 self.msg+="Recycling could not be performed\n"
+                self.board[commandFormatted[1]][commandFormatted[0]].copyCard(hold1)
+                self.board[commandFormatted[3]][commandFormatted[2]].copyCard(hold2)
                 return False
             
         return True 
+
     #Checks if the space is available and the space below is taken
     def spaceAvailable(self,indexLetter, indexNum):
         if(int(indexNum) > 1):
