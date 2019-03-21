@@ -5,13 +5,6 @@ Matching colors or dots card game
 [Link to the google document for the project's report: ](https://docs.google.com/document/d/1j9TxmncglEvMDvHIVAIgUjBApYzDmrPF1RbcJtKrPms/edit)
 
 
-Raphaëlle Giraud1 and Talar Kochakejian2  and Tony Yuan3 and Michael Tarantino4
-1 27514204 raphaelle.giraud@gmail.com
-2 40018152 koushagjiantalar@gmail.com
-340029336 yuan.tony.1@gmail.com
-4 26570070 taramic.42@gmail.com
-
-
 
 Team members          | Email                         | Student Id   |Github Usernames
 ------------          | --------------------          | ------------ |----------------
