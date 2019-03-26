@@ -1,6 +1,11 @@
 # polite-double-card
 Matching colors or dots card game
 
+# To run the application:
+------------------------------
+#1 Go the DoubleCardDriver.py file
+#2 Specify what type of game you want to play (runHumanVSHuman() or runHumanVSAI())
+#3 Run it.
 
 [Link to the google document for the project's report: ](https://docs.google.com/document/d/1j9TxmncglEvMDvHIVAIgUjBApYzDmrPF1RbcJtKrPms/edit)
 
