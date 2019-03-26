@@ -2,7 +2,6 @@
 Matching colors or dots card game
 
 # To run the application:
-------------------------------
 #1 Go the DoubleCardDriver.py file
 
 #2 Specify what type of game you want to play (runHumanVSHuman() or runHumanVSAI())
